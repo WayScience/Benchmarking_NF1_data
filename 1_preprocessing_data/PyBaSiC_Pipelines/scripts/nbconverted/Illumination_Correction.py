@@ -5,7 +5,7 @@
 
 # ## Import libraries
 
-# In[2]:
+# In[1]:
 
 
 import sys
@@ -26,7 +26,7 @@ import pybasic
 # - Allows for PyBaSiC to be run on any image sets and only need to input the path to the directory with the channel folders and the folder name of the channel that you
 # want to work with.
 
-# In[47]:
+# In[2]:
 
 
 def load_pybasic_data(channel_path: pathlib.Path, channel: str, file_extension=".tif"):
@@ -104,22 +104,43 @@ def run_illum_correct(channel_path: pathlib.Path, channel: str, save_path: pathl
     for i, image in enumerate(corrected_images):
         orig_file = image_files[i]
         orig_file_name = orig_file.split("/")[4]
-        new_filename = f'{new_channel_save_path}/{orig_file_name}_IllumCorrect.tif'
-        skimage.io.imsave(new_filename, image)
+        new_filename = pathlib.Path(f'{new_channel_save_path}/{orig_file_name}_IllumCorrect.tif')
+
+        # If the image has not been correcrted yet, then the function will save the image. If the image exists, it will skip saving.
+        if not new_filename.is_file():
+            skimage.io.imsave(new_filename, image)
+        
+        else:
+            print(f"{new_filename.name} already exists!")
 
 
 # ### Implementing helper functions to run illumination correction on each channel for NF1 data
 
-# In[50]:
+# In[3]:
 
 
+# Set location of input and output locations
+# In this case, I am setting only one variable because my input and output directory is the same
 channel_path = pathlib.Path('../PyBaSiC_Pipelines/NF1_Channels')
-channel = "DAPI"
-save_path = pathlib.Path('../PyBaSiC_Pipelines/NF1_Channels')
-save_channel = "DAPI_Corrected"
+
+# Channels to process
+channels = ["DAPI", "GFP", "RFP"]
+
+# Perform illumination correction on all channels:
+for channel in channels:
+    print("Correcting", channel, "channel")
+    # Folder to save the output channel
+    save_channel = f"{channel}_Corrected"
+
 # If you want to output the flatfield and darkfield calculations, then put "output_calc=True". If not, leave out from function since it is defaulted to False
 
-run_illum_correct(channel_path, channel, save_path, save_channel)
+# Perform illumination correction funtion for each channel
+    run_illum_correct(
+        channel_path=channel_path,
+        channel=channel,
+        save_path=channel_path,
+        save_channel=save_channel
+    )
 
 
 # ## Process of PyBaSiC Illumination Correction
@@ -137,7 +158,7 @@ run_illum_correct(channel_path, channel, save_path, save_channel)
 # 
 # ```
 
-# In[ ]:
+# In[4]:
 
 
 channel_path = pathlib.Path('../PyBaSiC_Pipelines/NF1_Channels/DAPI')
@@ -157,7 +178,7 @@ channel_images = pybasic.tools.load_data(channel_path, '.tif', verbosity = True)
 
 # ### Run PyBaSiC to calculate the flatfield and darkfield
 
-# In[3]:
+# In[5]:
 
 
 flatfield, darkfield = pybasic.basic(channel_images, darkfield=True)
@@ -165,7 +186,7 @@ flatfield, darkfield = pybasic.basic(channel_images, darkfield=True)
 
 # ### Displays the flatfield and darkfield that will be applied to the images
 
-# In[4]:
+# In[6]:
 
 
 # Based on documentation from the developers, it is recommended to manually check the flatfield function created using the functions below.
@@ -185,7 +206,7 @@ plt.show()
 
 # ### Run illumination correction
 
-# In[5]:
+# In[7]:
 
 
 channel_images_corrected = pybasic.correct_illumination(
@@ -197,7 +218,7 @@ channel_images_corrected = pybasic.correct_illumination(
 
 # ### Conversion of Corrected Images
 
-# In[6]:
+# In[8]:
 
 
 # The default output for the corrected images was not compatable with downstream processes which required code to convert the images to `8-bit`. This code was
@@ -212,7 +233,7 @@ corrected_images = corrected_images_coverted.astype(np.uint8)
 
 # ### Use `for` loop that adds suffix to corrected images and downloads them
 
-# In[7]:
+# In[9]:
 
 
 # Recommended to add a suffix that will indicate the which type of image it is, especially if the raw and corrected images look the same to the naked eye.
