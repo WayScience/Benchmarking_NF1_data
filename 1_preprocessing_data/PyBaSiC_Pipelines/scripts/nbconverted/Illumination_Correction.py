@@ -128,7 +128,7 @@ channels = ["DAPI", "GFP", "RFP"]
 
 # Perform illumination correction on all channels:
 for channel in channels:
-    print("Correcting", channel, "channel")
+    print("Correcting", channel, "channel images")
     # Folder to save the output channel
     save_channel = f"{channel}_Corrected"
 
