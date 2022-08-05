@@ -1,8 +1,26 @@
 # Download NF1 Schwann Cell Images
-The Cell Painting Images were devived from two genotypes of the NF1 gene (WT +/+ and Het +/-)
+Information regarding the data for the NF1 project are as follows:
 
-This pilot data is located with the folder [NF1_Images](NF1_Images). The data add up to approximately 200 MB.
+```
+Assay: Modified Cell Painting
 
-# File Name Structure: 
+Channels: DAPI (DNA/Nuclei), GFP (Endoplasmic Reticulum), RFP (Cytoplasm) 
 
-*insert image like what CFReT had -> seems to be the easiest way to describe it*
+Cells: Schwann cells
+
+Samples: Two genotypes of the NF1 gene, WT +/+ and Het +/-
+
+Microscope: GE Deltavision Elite
+
+Magnification: 20X
+
+Bit-size: 16-bit
+
+Number of images: 96 images
+
+Total memory: 212.9 MB
+```
+
+## File Name Structure: 
+
+![NF1 Pilot Data Metadata](NF1_Pilot_Data_Metadata.png "NF1 Pilot Data Metadata")
