@@ -1,0 +1,8 @@
+name: 2.segment-NF1-data
+channels:
+  - conda-forge
+dependencies:
+  - conda-forge::python=3.8.13
+  - conda-forge::jupyter=1.0.0
+  - conda-forge::pandas=1.4.2
+  - conda-forge::cellpose=2.0.5
