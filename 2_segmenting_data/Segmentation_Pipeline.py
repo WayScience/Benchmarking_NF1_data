@@ -59,7 +59,7 @@ nuclei_model_specs = {
 cyto_model_specs = {
     "model_type": "cyto2",
     "channels": [1, 3],
-    "diameter": 155,
+    "diameter": 146,
     "flow_threshold": 0.4,
     "remove_edge_masks": True,
 }

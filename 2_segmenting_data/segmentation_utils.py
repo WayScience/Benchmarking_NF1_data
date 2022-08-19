@@ -12,53 +12,16 @@ import numpy as np
 import matplotlib.path as mplPath
 
 
-def get_outlines(image: np.ndarray, model_specs: dict) -> pd.DataFrame:
-    """finds outlines of objects using cellpose specs from model_specs and return pandas array with outlines of objects
+def get_seg_data(image: np.ndarray, model_specs: dict, data: str) -> pd.DataFrame:
+    """finds center X,Y or outlines of objects using cellpose specs from model_specs and return pandas array with the specified data of objects
     Args:
         image (np.ndarray): image with objects to segment
         model_specs (dict): specifications for cellpose segmentation
+        data (str): specified segmentation data information for an object, either "locations" or "outlines"
     Returns:
-        pd.DataFrame: dataframe with object outlines
+        pd.DataFrame: dataframe with object data
     """
-    # Empty list for the outlines data to be appended to
-    objects_data = []
-
-    # CellPose model specs based on the specs for the object
-    cellpose_model = models.Cellpose(gpu=True, model_type=model_specs["model_type"])
-    masks, flows, styles, diams = cellpose_model.eval(
-        image,
-        diameter=model_specs["diameter"],
-        channels=model_specs["channels"],
-        flow_threshold=model_specs["flow_threshold"],
-    )
-
-    # Remove the cell masks that are on the edges of the image
-    if model_specs["remove_edge_masks"]:
-        masks = utils.remove_edge_masks(masks)
-
-    # Appends the outlines for the objects to the list for each image site
-    outlines = utils.outlines_list(masks)
-    for outline in outlines:
-        object_data = {
-            "Outline": outline,
-        }
-        objects_data.append(object_data)
-
-    # Converts list of outlines data into pandas dataframe
-    objects_data = pd.DataFrame(objects_data)
-
-    return objects_data
-
-
-def get_locations(image: np.ndarray, model_specs: dict) -> pd.DataFrame:
-    """finds center X,Y of objects using cellpose specs from model_specs and return pandas array with center X,Y of objects
-    Args:
-        image (np.ndarray): image with objects to segment
-        model_specs (dict): specifications for cellpose segmentation
-    Returns:
-        pd.DataFrame: dataframe with object center coords
-    """
-    # Empty list for object locations
+    # Empty list for object data
     objects_data = []
 
     # CellPose model has many different parameters that can be found via the Command Line documentation (https://cellpose.readthedocs.io/en/latest/command.html), which
@@ -75,28 +38,41 @@ def get_locations(image: np.ndarray, model_specs: dict) -> pd.DataFrame:
     if model_specs["remove_edge_masks"]:
         masks = utils.remove_edge_masks(masks)
 
-    # CellPose will determine the (x,y) points that create the outlines for each of the cells being segmented. By determining the mean of the these outline points,
-    # we can then take the (x,y) center coordinates and add them into our objects data list from above
-    outlines = utils.outlines_list(masks)
-    for outline in outlines:
-        centroid = outline.mean(axis=0)
-        object_data = {
-            "Location_Center_X": centroid[0],
-            "Location_Center_Y": centroid[1],
-        }
-        objects_data.append(object_data)
+    # If `data` is set to locations, then the (x,y) points that create the outlines for each of the cells being segmented that is determined by CellPose will be used 
+    # to calculate the mean of the outline points. The mean is the (x,y) center coordinates and is added into the objects data list from above.
+    if data == 'locations':
+        outlines = utils.outlines_list(masks)
+        for outline in outlines:
+            centroid = outline.mean(axis=0)
+            object_data = {
+                "Location_Center_X": centroid[0],
+                "Location_Center_Y": centroid[1],
+            }
+            objects_data.append(object_data)
+
+    # If `data` is set to outlines, the (x,y) points that make the outlines for the object will be appended to the list for each well and site.
+    if data == 'outlines':
+        outlines = utils.outlines_list(masks)
+        for outline in outlines:
+            object_data = {
+                "Outline": outline,
+            }
+            objects_data.append(object_data)
+
 
     # Covert the object data list into a pandas Dataframe
     objects_data = pd.DataFrame(objects_data)
     return objects_data
 
-
-def overlay_channels(identifier: str, images_dir: pathlib.Path):
+def overlay_channels(identifier: str, images_dir: pathlib.Path, rfp_multiplier: int = 1, gfp_multiplier: int = 1, dapi_multiplier: int = 1):
     """overlays cytoplasm, ER, and nuclei channels to help cytoplasm segmentation in CellPose
 
     Args:
         current_image (str): string for current site to overlay the channels for
         current_dir (pathlib.Path): directory of where the current images used are located
+        rfp_multiplier (int): integer to multiply to the rfp channel if you want these objects brighter for human visual interpretation (default = 1, no change)
+        gfp_multiplier (int): integer to multiply to the gfp channel if you want these objects brighter for human visual interpretation (default = 1, no change)
+        dapi_multiplier (int): integer to multiply to the dapi channel if you want these objects brighter for human visual interpretation (default = 1, no change)
     """
     # Takes the identifer of the nuclei channel and splits it into parts: well, plate, channel, site
     # We then use all parts except for channel and change it for the GFP and RFP IDs
@@ -118,7 +94,8 @@ def overlay_channels(identifier: str, images_dir: pathlib.Path):
 
     # RFP = red channel (cytoplasm), GFP = green channel (ER), DAPI = blue (nuclei)
     # Multiplier only assists in user interpretation of the images to configure model parameters in CellPose GUI
-    overlay = np.dstack([rfp * 3, gfp, dapi])
+    # CellPose does not take the multipliers into consideration when performing segmentation
+    overlay = np.dstack([rfp * rfp_multiplier, gfp * gfp_multiplier, dapi * dapi_multiplier])
 
     return overlay
 
@@ -227,7 +204,7 @@ def segment_NF1(
                 # Load in images that with DAPI
                 nuc_save_path.parents[0].mkdir(parents=True, exist_ok=True)
                 nuc_image = io.imread(image_path)
-                nuc_locations = get_locations(nuc_image, nuclei_model_specs)
+                nuc_locations = get_seg_data(nuc_image, nuclei_model_specs, data='locations')
                 # nuc_locations.to_csv(nuc_save_path, sep="\t")
 
                 # Create save path for cytoplasm with a specific suffix
@@ -237,7 +214,7 @@ def segment_NF1(
                 # Segment cytoplasm outlines by overlaying the channels for each site and finding outlines from those images
                 print(f"Segmenting {cyto_save_path.name}")
                 overlay_image = overlay_channels(image_identifier, data_path)
-                cyto_outlines = get_outlines(overlay_image, cyto_model_specs)
+                cyto_outlines = get_seg_data(overlay_image, cyto_model_specs, data='outlines')
                 # cyto_outlines.to_csv(cyto_save_path, sep="\t")
 
                 # Take the nuclei locations and cytoplasm outlines to link Cell_IDs for each to nuclei to their respective cytoplasm

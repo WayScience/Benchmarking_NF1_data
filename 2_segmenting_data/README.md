@@ -4,14 +4,15 @@ In this module, I present the pipeline for segmenting nuclei and cytoplasm from 
 
 ## Segmentation
 
-The method used for segmentation for both the nuclei and cytoplasm is an algorithm called [CellPose](https://doi.org/10.1038/s41592-020-01018-x). Through the Python implementation of this method, this pipeline can be reproducible and is easy to manipulate for various datasets.
+The method used for segmentation for both the nuclei and cytoplasm is an algorithm called [CellPose](https://doi.org/10.1038/s41592-020-01018-x). 
+Through the Python implementation of this method, this pipeline can be reproducible and is easy to manipulate for various datasets.
 
 ## Nuclei Segmentation
 
 After experimenting with the various parameters in CellPose on all of the pilot NF1 DAPI (nuclei) channel images, I settled on the following parameters for CellPose nuclei segmentation:
 - `model_type : "cyto"` This parameter sets the model for CellPose to use as the cytoplasm model, which I found segments nuclei better than the established nucleus model. 
 More information about the various CellPose models can be found at https://cellpose.readthedocs.io/en/latest/models.html.
-- `channels : [0,0]` This parameter sets the channels to be used by the model to segment, which in the case of nuclei, we do not ned to set channels because the images are greyscale.
+- `channels : [0,0]` This parameter sets the channels to be used by the model to segment, which in the case of nuclei, there is no need to set channels because the images are greyscale.
 - `diameter : 50` This parameter sets the cell diameter for cells within the image to an extact value. 
 This can also be calculated using the `calculate` button in the CellPose GUI. 
 I found that the segmentation worked better when the diameter was established with a set value. 
@@ -27,11 +28,14 @@ In the middle (non-optimal) image, these parameters cut off parts of the nucleus
 In the right image, the parameters I used segment this nucleus where it includes all of the cell and keeps its shape. 
 
 For **nucleus B**, it has a smooth and continuous texture with no dark lines indicating two seperate nuclei. 
-In the middle (non-optimal) image, these parameters seperate this one nucleus into two nuclei, which is obviously wrong based on how the nuclei looks. In the right image, the parameters I used properly segmented the nucleus as one nucleus.
+In the middle (non-optimal) image, these parameters seperate this one nucleus into two nuclei, which is obviously wrong based on how the nuclei looks. 
+In the right image, the parameters I used properly segmented the nucleus as one nucleus.
 
 ## Cytoplasm Segmentation
 
-After experimenting with the various parameters in CellPose on all of the pilot NF1 DAPI (RFP) channel images, we settled on the following parameters for CellPose cytoplasm segmentation:
+After experimenting with the various parameters in CellPose on all of the pilot NF1 RFP channel images, I found that CellPose struggled with trying to segment cytoplasm with only this channel.
+From this, I decided it was best to overlay the channels into one image per site for cytoplasm segmentation.
+I settled on the following parameters for CellPose cytoplasm segmentation:
 - `model_type : "cyto2"` This parameter sets the model from CellPose to be used as the cytoplasm 2 model, which I found segments cytoplasm better than the other models.
 - `channels : [1,3]` This parameter sets the channels to be used by the model to segment the cytoplasm of the cells using the nuclei as the base (1: blue) and the RFP channel as the channel to be segmented (3: red).
 Since CellPose struggled with segmenting cytoplasm using only the RFP channel, I use a function to overlay nuclei, ER, and cytoplasm channels into one image from each well and site called `overlay_channels()` in [segmentation_utils.py](segmentation_utils.py).
@@ -41,7 +45,7 @@ ER channel is not used by CellPose during segmentation as CellPose can only use 
 The `overlay_channels()` function makes cytoplasm the red channel of the image and nuclei the blue channel of the image.
 Thus, `channels : [1,3]` has CellPose segment the cytoplasm channel (3: red) using the nuclei channel (1: blue) as its base.
 
-- `diameter : 155` This parameter sets the cell diameter of the cells within the image to a value, which can be calculated using the `calculate` button. 
+- `cell diameter : 155` This parameter sets the cell diameter of the cells within the image to a value, which can be calculated using the `calculate` button. 
 I found that the segmentation worked better when the diameter was established with a set value.
 - `flow_threshold : 0.4` This paramenter decreases the maximum allowed error of the flows for each mask (default is `flow_threshold : 0.4`).
 - `remove_edge_masks : True` This parameter removes any masks from CellPose that are touching an edge of the image.
@@ -59,6 +63,22 @@ As well, with the green filtered cell to the left of the orange cell, CellPose u
 
 In **panel D**, this image shows the parameters I used to segment the cytoplasm.
 These parameters worked the best for all images and it did the best in segmenting each cell without over or undersegmenting. 
+
+## "Non-Optimal Paramters", Important Information Regarding CellPose Parameters
+
+The term "non-optimal parameters" is very vague, especially since there are only a few parameters within CellPose to set. 
+After much experimentation and prototyping, I found that the `cell diameter` parameter was the most critical when finding the best parameters. 
+Secondarily, `model` is very important as a first step to find which model is actually finding your objects, but in this case, I am dicussing how important `cell diameter` is within a `model` that I found to work the best with my data. 
+Even one pixel can make a huge difference for different cells from different images, as shown in the figure below.
+
+![Segmentation_Sensitivity](Example_Figures/Sensitivity_Seg_Fig.png)
+
+Though there are other parameters to change that can help with segmentation, the `cell diameter` parameter is what makes or breaks a set of parameters. 
+In some cases, one value for this parameter works best for images from one pertubation or genotype and not for the other(s). 
+
+In the case for the NF1 data, there is no pattern for genotype images working better with one value or another. 
+Segmentation is a balancing game where you have to give and take.
+In my case, I chose to go with a `cell diameter = 146` since it worked better for the majority of images compared to `cell diameter = 145`.
 
 ## Linking Cells with Cell IDs
 
