@@ -12,7 +12,7 @@ import numpy as np
 import matplotlib.path as mplPath
 
 
-def get_seg_data(image: np.ndarray, model_specs: dict, data: str) -> pd.DataFrame:
+def get_seg_data(image: np.ndarray, model_specs: dict, seg_data_output: str) -> pd.DataFrame:
     """finds center X,Y or outlines of objects using cellpose specs from model_specs and return pandas array with the specified data of objects
     Args:
         image (np.ndarray): image with objects to segment
@@ -40,7 +40,7 @@ def get_seg_data(image: np.ndarray, model_specs: dict, data: str) -> pd.DataFram
 
     # If `data` is set to locations, then the (x,y) points that create the outlines for each of the cells being segmented that is determined by CellPose will be used 
     # to calculate the mean of the outline points. The mean is the (x,y) center coordinates and is added into the objects data list from above.
-    if data == 'locations':
+    if seg_data_output == 'locations':
         outlines = utils.outlines_list(masks)
         for outline in outlines:
             centroid = outline.mean(axis=0)
@@ -51,7 +51,7 @@ def get_seg_data(image: np.ndarray, model_specs: dict, data: str) -> pd.DataFram
             objects_data.append(object_data)
 
     # If `data` is set to outlines, the (x,y) points that make the outlines for the object will be appended to the list for each well and site.
-    if data == 'outlines':
+    if seg_data_output == 'outlines':
         outlines = utils.outlines_list(masks)
         for outline in outlines:
             object_data = {
@@ -204,7 +204,7 @@ def segment_NF1(
                 # Load in images that with DAPI
                 nuc_save_path.parents[0].mkdir(parents=True, exist_ok=True)
                 nuc_image = io.imread(image_path)
-                nuc_locations = get_seg_data(nuc_image, nuclei_model_specs, data='locations')
+                nuc_locations = get_seg_data(nuc_image, nuclei_model_specs, seg_data_output='locations')
                 # nuc_locations.to_csv(nuc_save_path, sep="\t")
 
                 # Create save path for cytoplasm with a specific suffix
@@ -214,7 +214,7 @@ def segment_NF1(
                 # Segment cytoplasm outlines by overlaying the channels for each site and finding outlines from those images
                 print(f"Segmenting {cyto_save_path.name}")
                 overlay_image = overlay_channels(image_identifier, data_path)
-                cyto_outlines = get_seg_data(overlay_image, cyto_model_specs, data='outlines')
+                cyto_outlines = get_seg_data(overlay_image, cyto_model_specs, seg_data_output='outlines')
                 # cyto_outlines.to_csv(cyto_save_path, sep="\t")
 
                 # Take the nuclei locations and cytoplasm outlines to link Cell_IDs for each to nuclei to their respective cytoplasm
