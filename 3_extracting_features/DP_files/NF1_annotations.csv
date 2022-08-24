@@ -1,0 +1,9 @@
+Plate,Well,Gene Identifier,Gene Symbol,Genotype,Channels
+1,C6,ENSG00000196712,NF1,WT,DAPI (nuclei); GFP (endoplasmic reticulum); RFP (actin/cytoplasm)
+1,C7,ENSG00000196712,NF1,Het,DAPI (nuclei); GFP (endoplasmic reticulum); RFP (actin/cytoplasm)
+1,D6,ENSG00000196712,NF1,WT,DAPI (nuclei); GFP (endoplasmic reticulum); RFP (actin/cytoplasm)
+1,D7,ENSG00000196712,NF1,Het,DAPI (nuclei); GFP (endoplasmic reticulum); RFP (actin/cytoplasm)
+1,E6,ENSG00000196712,NF1,WT,DAPI (nuclei); GFP (endoplasmic reticulum); RFP (actin/cytoplasm)
+1,E7,ENSG00000196712,NF1,Het,DAPI (nuclei); GFP (endoplasmic reticulum); RFP (actin/cytoplasm)
+1,F6,ENSG00000196712,NF1,WT,DAPI (nuclei); GFP (endoplasmic reticulum); RFP (actin/cytoplasm)
+1,F7,ENSG00000196712,NF1,Het,DAPI (nuclei); GFP (endoplasmic reticulum); RFP (actin/cytoplasm)
