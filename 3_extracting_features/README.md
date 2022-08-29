@@ -13,7 +13,8 @@ The config files were made based off the one used in the [same repository from a
 The following changes were made to each config file, which are [NF1_nuc_config.json](DP_files/NF1_nuc_config.json) and [NF1_cyto_config.json](DP_files/NF1_cyto_config.json).
 
 **Both:**
-- `"Allele" -> "Genotype` In the LUAD study, alleles were compared across cell painting images. For the NF1 data, the genotypes of the NF1 gene are compared.
+- `"Allele" -> "Genotype` In the LUAD study, alleles were compared across cell painting images. 
+For the NF1 data, the genotypes of the NF1 gene are compared.
 - `dataset: images: {file format: tif, bits: 16, width: 1080, height: 1080} -> dataset: images: {file format: tiff, bits: 8, width: 1224, height: 904}`: The image details are changed to reflect the NF1 data.
 - `prepare: implement: true -> prepare: implement: false` We do not prepare the NF1 data with illumination correction (already done) or compression with Deep Profiler.
 - `dataset: images: channels: [DNA, ER, RNA, AGP, Mito] -> dataset: images: channels: [DNA, ER, RNA]` While the Cell Painting dataset has multiple channels for cell images, the NF1 data only has the first three channels to examine.
@@ -31,14 +32,14 @@ This expansion attempts to capture as much of the cytoplasm as possible (this wi
 ### Step 1a: Create Feature Extraction Environment
 
 ```sh
-# Run this command to create the conda environment for feature extraction
+# Run this command in terminal to create the conda environment for feature extraction
 conda env create -f 3.NF1_feature_extraction_env.yml
 ```
 
 ### Step 1b: Activate Feature Extraction Environment
 
 ```sh
-# Run this command to activate the conda environment for Deep Profiler feature extraction
+# Run this command in terminal to activate the conda environment for Deep Profiler feature extraction
 
 conda activate 3.feature-extraction-NF1
 ```
@@ -67,7 +68,8 @@ pip install -e .
 
 ### Step 2c: Complete Tensorflow GPU Setup
 
-Based on previous projects within the lab, we found using Tensorflow GPU when using DeepProfiler improves performance. To setup, follow [these instructions](https://www.tensorflow.org/install/pip#3_gpu_setup).
+Based on previous projects within the lab, we found using Tensorflow GPU when using DeepProfiler improves performance. 
+To setup, follow [these instructions](https://www.tensorflow.org/install/pip#3_gpu_setup).
 I use Tensorflow GPU while processing NF1 data.
 
 ## Step 3: Define Project Paths
@@ -83,13 +85,15 @@ In [compile_DP_projects.ipynb](compile_DP_projects.ipynb), the necessary project
 The config files ([NF1_nuc_config.json](DP_files/NF1_nuc_config.json)/[NF1_cyto_config.json](DP_files/NF1_cyto_config.json)) are copied to their corresponding projects and the pretrained model ([efficientnet-b0_weights_tf_dim_ordering_tf_kernels_autoaugment.h5](DP_files/efficientnet-b0_weights_tf_dim_ordering_tf_kernels_autoaugment.h5)) to both projects.
 Both of these files are located within the [DP_files folder](DP_files/) for reference.
 
-An `index.csv` file needs to be compiled as it necessary for DeepProfiler to load each image, which is created using the DP_files. Using the index.csv, the locations are compiled (in project/input/locations) and these csv files are necessary for DeepProfiler to find the single cells in each image.
+We need to compile an `index.csv` file as it necessary for DeepProfiler to load each image.
+We create this using the the annotations file.
+Using the index.csv, we compile the locations (in project/input/locations), which are necessary csv files for DeepProfiler to find the single cells in each image.
 
 For more information on DeepProfiler, please reference the [DeepProfiler wiki](https://github.com/cytomining/DeepProfiler/wiki/2.-Project-structure).
 
 ```bash
-# Run this script to compile the DeepProfiler projects
-bash 2.compile-DP-projects.sh
+# Run this script in terminal to compile the DeepProfiler projects
+bash 3.compile-DP-projects.sh
 ```
 
 ## Step 5: Extract Features with DeepProfiler
@@ -98,7 +102,18 @@ Change `path/to/DP_nuc_project` and `path/to/DP_cyto_project` below to the `nuc_
 **Note:** Only include what is in the pathlib.Path(), not the full path for each variable (e.g pathlib.Path('NF1_nuc_project') -> use NF1_nuc_project)
 
 ```sh
-# Run this script to extract features with DeepProfiler
+# Run this script in terminal to extract features with DeepProfiler
 python3 -m deepprofiler --gpu 0 --exp efn_pretrained --root `path/to/DP_nuc_project` --config NF1_nuc_config.json profile
 python3 -m deepprofiler --gpu 0 --exp efn_pretrained --root `path/to/DP_cyto_project` --config NF1_cyto_config.json profile
+```
+
+## Step 6: Rename Cytoplasm Project Location Files
+
+Due to the format of the checkpoint being used, the location files within the Cytoplasm project must end with `Nuclei.csv`. 
+This means that the files in the `/inputs/locations` directory for both the Nuclei and Cytoplasm projects are named the exact same (e.g {well}-{site}-Nuclei.csv).
+With the [rename_cyto_locations](rename_cyto_locations.ipynb) notebook, the suffix of the files in Cytoplasm projects are renamed to `Cytoplasm.csv` to avoid confusion during downstream analysis. 
+
+```bash
+# Run this script in terminal to compile the DeepProfiler projects
+bash 3.rename_cyto_locations.sh
 ```
