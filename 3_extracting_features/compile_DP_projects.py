@@ -41,7 +41,6 @@ segmentation_data_path = pathlib.Path('../2_segmenting_data/Segmented_Images/')
 # In[4]:
 
 
-# Set object as the object for the project
 object1 = "nuc"
 
 dp.compile_project(nuc_project_path, checkpoint_name, annotations_path, images_load_path, segmentation_data_path, object1)
@@ -52,7 +51,6 @@ dp.compile_project(nuc_project_path, checkpoint_name, annotations_path, images_l
 # In[5]:
 
 
-# Set object as object for the project
 object2 = "cyto"
 
 dp.compile_project(cyto_project_path, checkpoint_name, annotations_path, images_load_path, segmentation_data_path, object2)

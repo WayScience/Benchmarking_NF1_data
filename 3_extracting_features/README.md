@@ -6,7 +6,10 @@ In this module, I present the pipeline for extracting features from the NF1 data
 
 To extract features from the NF1 data, I use [DeepProfiler](https://github.com/cytomining/DeepProfiler), commit [`8752f69`](https://github.com/cytomining/DeepProfiler/commit/8752f69686a0b0c53d4e829d598409506bac59f4).
 
-The config files were made based off the one used in the [LUAD Cell Painting repository](https://github.com/broadinstitute/luad-cell-painting).
+Based off of previous projects in the lab, I decided to use a [pretrained model](https://github.com/broadinstitute/luad-cell-painting/tree/main/outputs/efn_pretrained/checkpoint) from the [LUAD Cell Painting repository](https://github.com/broadinstitute/luad-cell-painting) with DeepProfiler.
+DeepProfiler has the function to be able to train and create your own model (also named `checkpoint`) which I would like to test in the future.
+
+The config files were made based off the one used in the [same repository from above](https://github.com/broadinstitute/luad-cell-painting).
 The following changes were made to each config file, which are [NF1_nuc_config.json](DP_files/NF1_nuc_config.json) and [NF1_cyto_config.json](DP_files/NF1_cyto_config.json).
 
 **Both:**

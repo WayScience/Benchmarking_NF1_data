@@ -11,20 +11,20 @@ def copy_DP_files(
     config_name: str,
     checkpoint_name: str,
 ):
-    """copy config and checkpoint files to their necessary location in DP project (located at project path)
+    """Copy config and checkpoint files to their designated location in DP project as assigned by the project_path
     Args:
-        project_path (pathlib.Path): path for DP project
-        config_name (str): name of config file to copy
-        checkpoint_name (str): name of checkpoint file to copy
+        project_path (pathlib.Path): Path for DP project to be located in
+        config_name (str): Name of config file to copy
+        checkpoint_name (str): Name of checkpoint file to copy
     """
 
-    # copy config file to DP project
+    # Copy config file to DP project
     config_load_path = pathlib.Path(f"DP_files/{config_name}")
     config_save_path = pathlib.Path(f"{project_path}/inputs/config/{config_name}")
     config_save_path.parents[0].mkdir(parents=True, exist_ok=True)
     shutil.copyfile(config_load_path, config_save_path)
 
-    # copy checkpoint file to DP project
+    # Copy checkpoint file to DP project
     checkpoint_load_path = pathlib.Path(f"DP_files/{checkpoint_name}")
     checkpoint_save_path = pathlib.Path(
         f"{project_path}/outputs/efn_pretrained/checkpoint/{checkpoint_name}"
@@ -106,7 +106,7 @@ def compile_training_locations(
     save_path: pathlib.Path,
     object: str,
 ):
-    """Compile well-site-nuc.csv file with cell locations, saving to save_path/plate/well
+    """Compile well-site-object.csv file with cell locations, saving to save_path/plate/well
     Args:
         index_csv_path (pathlib.Path): Path to index.csv file for object (nuc or cyto) DeepProfiler project
         segmentation_data_path (pathlib.Path): Path to segmentation folder with .tsv locations files
@@ -126,6 +126,8 @@ def compile_training_locations(
         identifier_site = identifier_details[3]
         identifier = f"{identifier_well}_{identifier_site}"
 
+        # Note: The name is hard coded to "Nuclei.csv" due to how the pretrained model works. Even though it should be Cytoplasm for the cyto_project,
+        # it has to be named "Nuclei" to prevent errors when running DeepProfiler (e.g saying no cells to profile when there are)
         locations_save_path = pathlib.Path(
             f"{save_path}/{plate}/{well}-{site}-Nuclei.csv"
         )
@@ -155,6 +157,9 @@ def compile_training_locations(
             except KeyError:
                 print(f"No segmentation data within {frame_segmentations_path}")
                 continue
+
+            # Note: As decribed above, even though in the cyto_project it is using Cytoplasm center coords, for DeepProfiler to work with the model, it must
+            # be in this specific naming structure
             frame_segmentations = frame_segmentations.rename(
                 columns={
                     "Location_Center_X": "Nuclei_Location_Center_X",
