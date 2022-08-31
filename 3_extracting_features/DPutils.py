@@ -227,7 +227,8 @@ def compile_project(
 
 
 def rename_cyto_locations(cyto_locations_path: pathlib.Path):
-    """Rename the .csv files within directory from "Nuclei.csv" to "Cytoplasm.csv" to avoid confusion during downstream analysis.
+    """Rename the .csv files within directory from "Nuclei.csv" to "Cytoplasm.csv" to avoid confusion during downstream analysis. See Step 7 in the README
+    for more information.
 
     Args:
         cyto_locations_path (pathlib.Path): Path to cyto_project directory (currently only set up to be one plate, so directory goes to the plate)

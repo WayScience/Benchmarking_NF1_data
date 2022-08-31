@@ -1,4 +1,4 @@
-# 2. Extract NF1 Features
+# 3. Extract NF1 Features
 
 In this module, I present the pipeline for extracting features from the NF1 data.
 
@@ -107,13 +107,19 @@ python3 -m deepprofiler --gpu 0 --exp efn_pretrained --root `path/to/DP_nuc_proj
 python3 -m deepprofiler --gpu 0 --exp efn_pretrained --root `path/to/DP_cyto_project` --config NF1_cyto_config.json profile
 ```
 
-## Step 6: Rename Cytoplasm Project Location Files
+## Step 6: Define Cytoplasm Locations Directory Path
+
+Inside the notebook [rename_cyto_locations.ipynb](rename_cyto_locations.ipynb), the variable `cyto_locations_path` needs to be changed to reflect the plate in the `/locations` directory from the Cytoplasm project that contains the files to be renamed.
+
+**Note:** Currently, there is only one plate from this pilot data so that is why the path goes directory to one plate and not to the whole `/locations` directory.
+
+## Step 7: Rename Cytoplasm Project Location Files
 
 Due to the format of the checkpoint being used, the location files within the Cytoplasm project must end with `Nuclei.csv`. 
 This means that the files in the `/inputs/locations` directory for both the Nuclei and Cytoplasm projects are named the exact same (e.g {well}-{site}-Nuclei.csv).
-With the [rename_cyto_locations](rename_cyto_locations.ipynb) notebook, the suffix of the files in Cytoplasm projects are renamed to `Cytoplasm.csv` to avoid confusion during downstream analysis. 
+With the [rename_cyto_locations.ipynb](rename_cyto_locations.ipynb) notebook, the suffix of the files in Cytoplasm projects are renamed to `Cytoplasm.csv` to avoid confusion during downstream analysis. 
 
 ```bash
-# Run this script in terminal to compile the DeepProfiler projects
+# Run this script in terminal to rename all files in the /inputs/locations/ directory for the Cytoplasm Project
 bash 3.rename_cyto_locations.sh
 ```
