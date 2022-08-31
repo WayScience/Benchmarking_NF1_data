@@ -24,3 +24,4 @@ dependencies:
 - sentry-sdk=0.18.0
 - pip:
     - cellprofiler==4.2.4
+    
