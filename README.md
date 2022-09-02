@@ -3,7 +3,7 @@
 ## Data
 
 The data used in this project is a modified Cell Painting assay on [schwann cells](https://www.ncbi.nlm.nih.gov/books/NBK544316/) from patients with [Neurofibromatosis type 1 (NF1)](https://medlineplus.gov/genetics/condition/neurofibromatosis-type-1/). 
-In this modified Cell Painting, there are only three channels:
+In this modified Cell Painting, there are three channels:
 
 - `DAPI` (Nuclei)
 - `GFP` (Endoplasmic Reticulum)
