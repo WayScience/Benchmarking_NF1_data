@@ -2,13 +2,14 @@
 
 In this module, I present my CellProfiler (CP) pipelines used for illumination correction, segmentation, and feature extraction.
 
-Since there are multiple methods are performing each of these steps, I decided to create two pipelines using [CellProfiler](https://cellprofiler.org/), version [4.2.4](https://cellprofiler-manual.s3.amazonaws.com/CellProfiler-4.2.4/index.html), a very commonly used and robust software for cell image analysis.
+Since there are multiple methods for performing each of these steps, I decided to create two pipelines using [CellProfiler](https://cellprofiler.org/), version [4.2.4](https://cellprofiler-manual.s3.amazonaws.com/CellProfiler-4.2.4/index.html), a very commonly used and robust software for cell image analysis.
 The goal of having multiple pipelines using various methods will allow for benchmarking for the "best" method later on. 
 
 ## Illumination Correction (IC) Pipeline
 
 In the [NF1_illum.cpproj](Pipelines/NF1_illum.cpproj) CP project, I perform illumination correction on each channel (DAPI, GFP, RFP) of the NF1 data. 
-There are three sets of `CorrectIlluminationCalculate` and `CorrectIlluminationApply` modules, where each set corrects a different channel and each contains different set of parameters as I have found using the same parameters for each channel does not always work.
+There are three sets of `CorrectIlluminationCalculate` and `CorrectIlluminationApply` modules, where each set corrects a different channel and each contains different set of parameters.
+I have found using the same parameters for each channel does not always work.
 
 For more information regarding these modules, you can reference my [Illumination Correction prototyping README](https://github.com/WayScience/CellProfiler_Prototyping/tree/main/1.illumination_correction) within the [CellProfiler_Prototyping repo](https://github.com/WayScience/CellProfiler_Prototyping). 
 This README describes each of the parameters within these modules and provides further references.
@@ -22,7 +23,7 @@ In the [NF1_analysis.cpproj](Pipelines/NF1_analysis.cpproj) CP project, I perfor
 
 ### Segmentation
 
-To perform segmentation in CP, the modules that were used were:
+To perform segmentation in CP, we used the following modules:
 
 - **IdentifyPrimaryObjects:** Identify nuclei from the DAPI channel images. This creates a group for an object called `OrigNuclei`, which includes nuclei that are a part of cells that touch an edge of the image.
 
@@ -68,11 +69,11 @@ The following modules were used and their respective parameters (not including s
 
     - "Measure within objects?" `Yes` or `No`
 
-    The default is `No`. It is changed to `Yes` as we are extracting features from the objects.
+    The default is `No`. I changed to `Yes` as we are extracting features from the objects.
 
     - "Subsampling factor for granularity measurement": `Integer value`
 
-    The default is set to `0.25`. I kept the default value and did not follow the Borad Institute because the documentation states:
+    The default is set to `0.25`. I kept the default value and did not follow the Broad Institute because the documentation states:
 
     >  Images are typically of higher resolution than is required for granularity measurements, so the default value is 0.25. 
     For low-resolution images, increase the subsampling fraction; for high-resolution images, decrease the subsampling fraction.
@@ -106,7 +107,7 @@ The following modules were used and their respective parameters (not including s
 
     - "Measure the intensity only from areas enclosed by objects?": `Yes` or `No`
     
-    The default is `No`. It is changed to `Yes` because the goal is it extract features from the objects/cells.
+    The default is `No`. I changed it to `Yes` because the goal is it extract features from the objects/cells.
 
     - "Calculate custom percentiles": `Yes` or `No`
 
@@ -193,7 +194,7 @@ The three modules consist of one that measures `Nuclei` and two that measure `Ce
 
     The default is `3` and is not changed.
 
-If want to know more about each of these parameters, you can use the `?` button on the far right of every parameter.
+If you want to know more about each of these parameters, you can use the `?` button on the far right of every parameter in the CellProfiler GUI.
 For further information on each of these modules, see the [Measurement section](https://cellprofiler-manual.s3.amazonaws.com/CellProfiler-4.2.1/modules/measurement.html) of the CellProfiler manual.
 
 ### Create SQLite Database File
