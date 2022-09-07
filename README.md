@@ -9,7 +9,7 @@ In this modified Cell Painting, there are three channels:
 - `GFP` (Endoplasmic Reticulum)
 - `RFP` (Actin)
 
-![Modified_Cell_Painting.png](Modified_Cell_Painting.png)
+![Modified_Cell_Painting.png](example_figures/Modified_Cell_Painting.png)
 
 There are two genotypes of the NF1 gene in these cells:
 
