@@ -92,6 +92,8 @@ Then, using [matplotlib.path](https://matplotlib.org/stable/api/path_api.html), 
 If a nucleus' center coordinates are within the a cytoplasm polygon, they are assigned the same `Cell_ID` as the cytoplasm.
 If there is any cytoplasm (cell) without a nucleus assigned to it, then that cytoplasm is discarded from the file, which controls for segmentation errors.
 
+---
+
 ## Step 1: Setup Segmentation Environment
 
 ### Step 1a: Create Segmentation Environment
