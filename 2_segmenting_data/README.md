@@ -1,4 +1,4 @@
-# 2. Segment NF1 Data
+# 2. Segment Schwann Cells from NF1 Data
 
 In this module, I present the pipeline for segmenting nuclei and cytoplasm from the NF1 pilot data.
 
