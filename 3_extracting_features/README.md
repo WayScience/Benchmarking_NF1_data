@@ -27,6 +27,8 @@ This expansion was recommended by Juan Caicedo to improve performance.
 - `dataset: locations: box_size: 96 -> dataset: locations: box_size: 256` This change expands the size of the box around each cell that DeepProfiler interprets. 
 This expansion attempts to capture as much of the cytoplasm as possible (this will be benchmarked in the future to assess the best box size).
 
+---
+
 ## Step 1: Setup Feature Extraction Environment
 
 ### Step 1a: Create Feature Extraction Environment

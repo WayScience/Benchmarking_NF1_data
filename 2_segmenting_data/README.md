@@ -1,4 +1,4 @@
-# Segment Schwann Cells from NF1 Data
+# 2. Segment Schwann Cells from NF1 Data
 
 In this module, I present the pipeline for segmenting nuclei and cytoplasm from the NF1 pilot data.
 
@@ -91,6 +91,8 @@ Then, using [matplotlib.path](https://matplotlib.org/stable/api/path_api.html), 
 
 If a nucleus' center coordinates are within the a cytoplasm polygon, they are assigned the same `Cell_ID` as the cytoplasm.
 If there is any cytoplasm (cell) without a nucleus assigned to it, then that cytoplasm is discarded from the file, which controls for segmentation errors.
+
+---
 
 ## Step 1: Setup Segmentation Environment
 
