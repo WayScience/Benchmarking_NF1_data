@@ -8,5 +8,4 @@ dependencies:
   - conda-forge::cellpose=2.0.5
   - conda-forge::scikit-image=0.19.2
   - conda-forge::jupyterlab
-  - conda-forge::pandas=1.4.2
   - conda-forge::matplotlib=3.5.2
