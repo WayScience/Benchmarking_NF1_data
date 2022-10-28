@@ -4,6 +4,10 @@ channels:
 dependencies:
   - conda-forge::python=3.8.13
   - conda-forge::scikit-image=0.19.2
-  - conda-forge::jupyterlab
   - conda-forge::pandas=1.4.4
   - conda-forge::matplotlib=3.5.2
+  - conda-forge::jupyter=1.0.0
+  - conda-forge::jupyterlab
+  - conda-forge::ipykernel
+  - conda-forge::nb_conda_kernels
+  - conda-forge::jupyter_contrib_nbextensions
