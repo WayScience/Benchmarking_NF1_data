@@ -17,3 +17,6 @@ pybasic/
 3_extracting_features/NF1_cyto_project-DP
 3_extracting_features/NF1_nuc_project-DP
 test.ipynb
+.ipynb_checkpoints/
+__pycache__/
+.DS_Store
