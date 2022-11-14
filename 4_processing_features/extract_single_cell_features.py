@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# ## Process single cell morphology features for CellProfiler readouts
+# # Process single cell morphology features for CellProfiler readouts
+
+# ## Import Libraries
 
 # In[1]:
 
@@ -13,6 +15,8 @@ from pycytominer import normalize
 from pycytominer.cyto_utils import cells, output
 
 
+# ## Set up paths to CellProfiler directory and output
+
 # In[2]:
 
 
@@ -20,13 +24,17 @@ from pycytominer.cyto_utils import cells, output
 cp_dir = "../CellProfiler_pipelines"
 output_dir = "data"
 
+# Set name and path of .sqlite file and path to metadata
 sql_file = "NF1_data.sqlite"
 single_cell_file = f"sqlite:///{cp_dir}/Analysis_Output/{sql_file}"
 platemap_file = f"{cp_dir}/Metadata/platemap_NF1_CP.csv"
 
+# Set path with name for outputted data
 sc_output_file = pathlib.Path(f"{output_dir}/nf1_sc_cellprofiler.csv.gz")
 sc_norm_output_file = pathlib.Path(f"{output_dir}/nf1_sc_norm_cellprofiler.csv.gz")
 
+
+# ## Set up names for linking columns between tables in the database file
 
 # In[3]:
 
@@ -42,6 +50,8 @@ linking_cols = {
 }
 
 
+# ## Load and view platemap file
+
 # In[4]:
 
 
@@ -49,6 +59,8 @@ linking_cols = {
 platemap_df = pd.read_csv(platemap_file)
 platemap_df
 
+
+# ## Set up `SingleCells` class from Pycytominer
 
 # In[5]:
 
@@ -65,6 +77,8 @@ sc = cells.SingleCells(
     load_image_data=True
 )
 
+
+# ## Merge single cells 
 
 # In[6]:
 
@@ -84,6 +98,8 @@ print(sc_df.shape)
 sc_df.head()
 
 
+# ## Normalize Data
+
 # In[7]:
 
 
@@ -99,6 +115,8 @@ print(normalize_sc_df.shape)
 normalize_sc_df.head()
 
 
+# ---
+# 
 # ### Visualize basic count statistics
 
 # In[8]:
