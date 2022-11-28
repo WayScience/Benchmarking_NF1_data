@@ -31,7 +31,7 @@ conda env create -f 4.processing_features.yml
 
 ### Step 2a: Set Up Paths
 
-Within the [extract_single_cell_features.ipynb](4_processing_features/extract_single_cell_features.ipynb) notebook, you can chnage the paths to reflect the local paths or names for your machine (**IF** you changed anything from the original pipeline) for the various parameters (e.g. CellProfiler directory, output directory, path to sqlite file, etc.)
+Within the [extract_single_cell_features.ipynb](4_processing_features/extract_single_cell_features.ipynb) notebook, you can chnage the paths to reflect the local paths or names for your machine (***IF* you changed anything from the original pipeline**) for the various parameters (e.g. CellProfiler directory, output directory, path to sqlite file, etc.)
 
 ### Step 2b: Run Extract Single Cell Features
 
