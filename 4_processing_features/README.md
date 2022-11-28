@@ -11,7 +11,8 @@ For more information regarding the functions that we used, please see [the docum
 
 ### Normalization
 
-Normalization of the data is important because there will be variety in the shapes of distributions. To make statsitical analysis easier, we normalize using standardized method.
+CellProfiler features can display a variety of distributions across cells.
+To facilitate analysis, we standardize all features (z-score) to the same scale.
 
 ---
 
@@ -22,6 +23,21 @@ Normalization of the data is important because there will be variety in the shap
 Make sure you are in the `4_processing_features` directory before performing the below command.
 
 ```sh
-# Run this command in terminal to create the conda environment for feature extraction
+# Run this command in terminal to create the conda environment
 conda env create -f 4.processing_features.yml
+```
+
+## Step 2: Normalize Single Cell Features
+
+### Step 2a: Set Up Paths
+
+Within the [extract_single_cell_features.ipynb](4_processing_features/extract_single_cell_features.ipynb) notebook, change the paths to reflect the local paths or names for your machine for the various parameters (e.g. CellProfiler directory, output directory, path to sqlite file, etc.)
+
+### Step 2b: Run Extract Single Cell Features
+
+Using the code below, run the notebook to extract and normalize single cell features from CellProfiler.
+
+```bash
+# Run this script in terminal
+bash 4.extract_sc_features.sh
 ```
