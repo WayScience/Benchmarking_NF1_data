@@ -1,5 +1,8 @@
+# Ignore folders 
 Images/
 pybasic/
+
+# Ignore unnecessary notebooks
 1_preprocessing_data/cell_profile_illlum_proto.cppipe
 1_preprocessing_data/PyBaSiC_Pipelines/Test.ipynb
 1_preprocessing_data/PyBaSiC_Pipelines/.ipynb_checkpoints/1Illumination Correction Pipeline-checkpoint.ipynb
@@ -20,3 +23,6 @@ test.ipynb
 .ipynb_checkpoints/
 __pycache__/
 .DS_Store
+
+# ignore extra images
+0_download_data/NF1_Processed_Images

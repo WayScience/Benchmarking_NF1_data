@@ -1,0 +1,28 @@
+name: download-NF1-data
+channels:
+  - conda-forge
+dependencies:
+  - conda-forge::python=3.8
+  - conda-forge::scikit-image=0.19.2
+  - conda-forge::pandas=1.4.4
+  - conda-forge::matplotlib=3.5.2
+  - conda-forge::jupyter=1.0.0
+  - conda-forge::jupyterlab
+  - conda-forge::ipykernel
+  - conda-forge::nb_conda_kernels
+  - conda-forge::jupyter_contrib_nbextensions
+  - conda-forge::pip
+  - conda-forge::numpy
+  - conda-forge::matplotlib
+  - conda-forge::mysqlclient
+  - conda-forge::openjdk
+  - conda-forge::scikit-learn
+  - conda-forge::mahotas
+  - conda-forge::gtk2
+  - conda-forge::Jinja2=3.0.1
+  - conda-forge::inflect=5.3.0
+  - conda-forge::wxpython=4.1.0
+  - conda-forge::sentry-sdk=0.18.0
+  - pip:
+    - cellprofiler==4.2.4
+
