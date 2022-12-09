@@ -30,7 +30,7 @@ Once we discover a biomarker from these cells, we hope that our method can be us
 
 | Module | Purpose | Description |
 | :---- | :----- | :---------- |
-| [0_download_data](0_download_data/) | Download NF1 pilot data | Download 96 images of the NF1 pilot data  for analysis|
+| [0_download_data](0_download_data/) | Download NF1 pilot data | Download images from each of NF1 dataset (e.g. pilot and second plate) for analysis|
 | [1_preprocessing_data](1_preprocessing_data/) | Perform Illumination Correction (IC) | Use `BaSiCPy` to perform IC on images per channel |
 | [2_segmenting_data](2_segmenting_data/) | Segment Objects | Perform segmentation using `Cellpose` and outputing center (x,y) coordinates for each object |
 | [3_extracting_features](3_extracting_features/) | Extract features | Use center (x,y) coordinates in `DeepProfiler` to extract features from all channels |
