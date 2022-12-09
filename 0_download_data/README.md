@@ -1,6 +1,6 @@
 # Download NF1 Schwann Cell Images
 
-In this module, we present the two datasets, pilot and new, that are downloaded to perform image-based cell profiling.
+In this module, we present the two datasets, one called pilot and a second dataset, that are downloaded to perform image-based cell profiling.
 
 ## NF1 Project Information
 
