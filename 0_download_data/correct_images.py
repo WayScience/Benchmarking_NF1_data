@@ -22,8 +22,6 @@ path_to_pipeline = "/home/jenna/NF1_SchwannCell_data/0_download_data/convert_cro
 path_to_output = "/home/jenna/NF1_SchwannCell_data/0_download_data/NF1_Second_Plate_Corrected"
 path_to_images = "/home/jenna/NF1_SchwannCell_data/0_download_data/NF1_Second_Plate"
 
-output_folder_name = "NF1_Second_Plate_Corrected"
-
 
 # ### Run CellProfiler to convert and crop images and reformat the metadata
 
@@ -36,7 +34,7 @@ correct.correct_images(path_to_pipeline, path_to_output, path_to_images)
 # In[4]:
 
 
-images_path = pathlib.Path("/home/jenna/NF1_SchwannCell_data/0_download_data/NF1_Second_Plate_Corrected")
+images_path = pathlib.Path(path_to_output)
 output_folder_name = 'NF1_Second_Plate_Corrected'
 
 correct.rename_images(images_path, output_folder_name)
