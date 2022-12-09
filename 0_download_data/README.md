@@ -62,7 +62,8 @@ Both the Actin and GFP channel images are all `.tif` files.
 ## Solution
 
 This led to the need for a solution to correct the second plate dataset to reflect the standard from the pilot dataset. 
-The corrections include using CellProfiler and Python. 
+The corrections include using CellProfiler and Python.
+
 In CellProfiler, we split the RGB images into three greyscale images (called red, green, and blue), taking the one of the three images that is connected to the channel (e.g. DAPI is the blue channel, GFP is green, RFP is red), and cropping the images to remove the scale.
 The cropped images from each channel are saved as `.tif` files.
 
@@ -88,11 +89,7 @@ conda env create -f 0.download_NF1_data.yml
 conda activate download-NF1-data
 ```
 
-## Step 3: Set input and output paths for running CellProfiler and correcting file names
-
-If needed, you can change the paths within the []
-
-## Step 4: Execute preprocessing NF1 data
+### Step 3: Execute preprocessing NF1 data
 
 ```bash
 # Run this script in terminal to segment NF1 data
