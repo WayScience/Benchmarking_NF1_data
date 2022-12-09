@@ -27,7 +27,7 @@ Number of images:
 
 - 384 images (New dataset)
 
-Total memory: 
+Total storage size: 
 
 - 212.9 MB (Pilot dataset)
 
@@ -61,7 +61,7 @@ Both the Actin and GFP channel images are all `.tif` files.
 
 ## Solution
 
-This led to the need for a solution to correct the second plate dataset to reflect the standard from the pilot dataset. 
+This led to the need to correct the second plate dataset to reflect standards from the pilot dataset. 
 The corrections include using CellProfiler and Python.
 
 In CellProfiler, we split the RGB images into three greyscale images (called red, green, and blue), taking the one of the three images that is connected to the channel (e.g. DAPI is the blue channel, GFP is green, RFP is red), and cropping the images to remove the scale.
@@ -78,20 +78,20 @@ Lastly, using Python, we created a function to reorder the file names and add me
 ### Step 1: Create conda environment
 
 ```sh
-# Run this command to create the conda environment for NF1 segmentation
+# Run this command to create the conda environment 
 conda env create -f 0.download_NF1_data.yml
 ```
 
 ### Step 2: Activate conda environment
 
 ```sh
-# Run this command to create the conda environment for NF1 segmentation
+# Run this command to create the conda environment 
 conda activate download-NF1-data
 ```
 
 ### Step 3: Execute preprocessing NF1 data
 
-```bash
-# Run this script in terminal to segment NF1 data
+```sh
+# Run this script in terminal
 bash 1.preprocessing_data.sh
 ```
