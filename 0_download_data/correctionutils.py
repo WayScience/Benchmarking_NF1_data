@@ -2,7 +2,6 @@ import os
 import pathlib
 from pathlib import Path
 
-
 def correct_images(path_to_pipeline: str, path_to_output: str, path_to_images: str):
     """
     correct NF1 second plate with CellProfiler and rename the file after the run to the name of the plate
@@ -19,7 +18,6 @@ def correct_images(path_to_pipeline: str, path_to_output: str, path_to_images: s
         os.system(command)
     else:
         print("This plate has already been ran through CellProfiler!")
-
 
 def rename_images(path_to_images: pathlib.Path, output_folder_name: str):
     """
