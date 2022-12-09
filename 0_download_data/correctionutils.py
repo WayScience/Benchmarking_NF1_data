@@ -1,16 +1,20 @@
+"""
+This file contains functions to perform the splitting, cropping, and conversion of the second NF1 dataset using CellProfiler and
+to reorder and rename the metadata of the images to fit the standard from the pilot dataset.
+"""
 import os
 import pathlib
 from pathlib import Path
 
 def correct_images(path_to_pipeline: str, path_to_output: str, path_to_images: str):
     """
-    correct NF1 second plate with CellProfiler and rename the file after the run to the name of the plate
+    correct NF1 second plate with CellProfiler
 
     Parameters
     ----------
-        path_to_pipeline (str): path to the CellProfiler .cppipe file with the segmentation and feature measurement modules
-        path_to_output (str): path to the output folder for the .sqlite file
-        path_to_images (str): path to folder with IC images from specific plate
+        path_to_pipeline (str): path to the CellProfiler .cppipe file
+        path_to_output (str): path to the output folder for the corrected images
+        path_to_images (str): path to folder with raw second plate images
     """
     if len(os.listdir(path_to_output)) == 0:
         # run CellProfiler on a plate that has not been analyzed yet (e.g. no files)
