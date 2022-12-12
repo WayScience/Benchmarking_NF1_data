@@ -34,7 +34,9 @@ Total storage size:
 - 204.2 MB (New dataset - post conversion and cropping)
 ```
 
-## File Name Structure
+## Standard Metadata Name Structure
+
+The standard metadata structure for this project is based on the pilot dataset.
 
 ![NF1 Pilot Data Metadata](example_images/NF1_Pilot_Data_Metadata.png "NF1 Pilot Data Metadata")
 

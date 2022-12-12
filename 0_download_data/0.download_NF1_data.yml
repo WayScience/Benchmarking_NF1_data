@@ -4,7 +4,7 @@ channels:
 dependencies:
   - conda-forge::python=3.8
   - conda-forge::scikit-image=0.19.2
-  - conda-forge::pandas=1.4.4
+  - conda-forge::pandas
   - conda-forge::matplotlib=3.5.2
   - conda-forge::jupyter=1.0.0
   - conda-forge::jupyterlab
