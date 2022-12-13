@@ -71,9 +71,13 @@ def rename_images(path_to_images: pathlib.Path, output_folder_name: str):
     }
 
     for image in path_to_images.iterdir():
-        # checks if images have the correct length and if not do not proceed with renaming 
-        if len(image.name.split("_")) != 4:
-            logging.error(f"The length is {len(image.name.split('_'))}")
+        # checks if images have the correct length and if not do not proceed with renaming
+        if len(image.name.split("_")) == 4:
+            continue
+
+        elif len(image.name.split("_")) != 4:
+            logging.warn(f"The length is {len(image.name.split('_'))}. The expected lenth is 4. \nCheck to see if images are already renamed!")
+            # logging.error(f"The length is {len(image.name.split('_'))}")
             # ADD EXCEPTION
             break
 
@@ -91,4 +95,6 @@ def rename_images(path_to_images: pathlib.Path, output_folder_name: str):
 
                 new_channel_name = f"{output_folder_name}/{well}_{channel_id}_{site}_{channel_name}_{plate}.tif"
                 Path(image).rename(Path(new_channel_name))
+
+        logging.info("All channels in this plate have been renamed!")
     
