@@ -55,3 +55,25 @@ import pybasic
 
 Follow the instructions on the [ImageJ website](https://imagej.net/software/fiji/downloads) to install Fiji.
 We use the 64-bit Linux install.
+
+## Step 3: Create Conda Environment
+
+```sh
+# Run this command to create the conda environment for NF1 segmentation
+conda env create -f 1.preprocessing_data.yml
+```
+
+## Step 4: Activate Conda Environment
+
+```sh
+# Run this command to activate the conda environment for NF1 segmentation
+conda activate preprocessing-nf1
+```
+
+## Step 5: Execute Preprocessing NF1 Data
+
+```bash
+# Run this script in terminal to segment NF1 data
+bash 1.preprocessing_data.sh
+```
+
