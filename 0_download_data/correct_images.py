@@ -7,20 +7,21 @@
 
 
 import pathlib
-import importlib
-correct = importlib.import_module("correctionutils")
+import correctionutils as correct
 
 
 # ## Correct Second Plate
 
 # ### Set paths
+# 
+# **Paths are set as strings to use in command line for CellProfiler**
 
 # In[2]:
 
 
-path_to_pipeline = "/home/jenna/NF1_SchwannCell_data/0_download_data/convert_crop_NF1_images.cppipe"
-path_to_output = "/home/jenna/NF1_SchwannCell_data/0_download_data/NF1_Second_Plate_Corrected"
-path_to_images = "/home/jenna/NF1_SchwannCell_data/0_download_data/NF1_Second_Plate"
+path_to_pipeline = "convert_crop_NF1_images.cppipe"
+path_to_output = "NF1_Corrected_Second_Plate"
+path_to_images = "NF1_Second_Plate"
 
 
 # ### Run CellProfiler to convert and crop images and reformat the metadata
@@ -35,7 +36,7 @@ correct.correct_images(path_to_pipeline, path_to_output, path_to_images)
 
 
 images_path = pathlib.Path(path_to_output)
-output_folder_name = 'NF1_Second_Plate_Corrected'
+output_folder_name = path_to_output
 
 correct.rename_images(images_path, output_folder_name)
 
