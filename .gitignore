@@ -29,4 +29,7 @@ __pycache__/
 
 # ignore test image datasets
 NF1_test
+NF1_Second_Plate_Old
 
+# Ignore test notebooks
+example_code.ipynb

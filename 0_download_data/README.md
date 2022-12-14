@@ -42,24 +42,20 @@ The standard metadata structure for this project is based on the pilot dataset.
 
 ## Issue with new dataset
 
-When comparing the pilot dataset and the second plate dataset, there were three big differences between them:
+When comparing the pilot dataset and the second plate dataset (updated as of 12/09), there were three big differences between them:
 
 1. Image composition
 2. File naming (metadata)
-3. File extension/type
 
-Firstly, the images from the second plate were RGB and contained a scale (Figure 1).
+Firstly, the images from the second plate were RGB (Figure 1).
 
-![new_dataset.png](example_images/new_dataset.png)
+![second_plate_dataset.png](example_images/second_plate_dataset.png)
 
-The images from the pilot dataset are greyscale (which is the standard), no scale, and are 8-bit (Figure 2). 
+The images from the pilot dataset are greyscale (which is the standard) and are 16-bit (Figure 2). 
 
 ![pilot_dataset.png](example_images/pilot_dataset.png)
 
 Secondly, since the code within this project relies on the metadata structure from the pilot data (see above), the second plate would not be able to run properly.
-
-Thirdly, the images from DAPI channel in the new dataset are all `.jpg` and not in `.tif`, which is not consistent with the pilot dataset.
-Both the Actin and GFP channel images are all `.tif` files.
 
 ## Solution
 
@@ -67,9 +63,7 @@ This led to the need to correct the second plate dataset to reflect standards fr
 The corrections include using CellProfiler and Python.
 
 In CellProfiler, we split the RGB images into three greyscale images (called red, green, and blue), taking the one of the three images that is connected to the channel (e.g. DAPI is the blue channel, GFP is green, RFP is red), and cropping the images to remove the scale.
-The cropped images from each channel are saved as `.tif` files.
-
-**Note:** After conversion and cropping, we noticed that all the images from the DAPI channel are pixelated while the other channels are not. This is believed to be due to the conversion of the images from `.jpg` to `.tif`. It is unknown how this will impact the morphological readouts. 
+The cropped images from each channel are saved as `.tif`files that are greyscale and 16-bit images.
 
 Lastly, using Python, we created a function to reorder the file names and add metadata to fit the standards for analysis downstream.
 

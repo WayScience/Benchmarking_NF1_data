@@ -70,31 +70,39 @@ def rename_images(path_to_images: pathlib.Path, output_folder_name: str):
         "Actin": {"id": "01_3", "channel_name": "RFP"},
     }
 
+    channel_number_added = (
+        "01_1_1",
+        "01_1_2",
+        "01_1_3",
+        "01_1_4",
+        "01_2_1",
+        "01_2_2",
+        "01_2_3",
+        "01_2_4",
+        "01_3_1",
+        "01_3_2",
+        "01_3_3",
+        "01_3_4",
+    )
+
     for image in path_to_images.iterdir():
-        # checks if images have the correct length and if not do not proceed with renaming
-        if len(image.name.split("_")) == 4:
-            continue
-
-        elif len(image.name.split("_")) != 4:
-            logging.warn(f"The length is {len(image.name.split('_'))}. The expected lenth is 4. \nCheck to see if images are already renamed!")
-            # logging.error(f"The length is {len(image.name.split('_'))}")
-            # ADD EXCEPTION
+        if any(x in str(image) for x in channel_number_added):
+            logging.warn("The images already contain the channel_number. Please check to see if images are already renamed in this plate!")
             break
+        else:
+            # goes through keys within dictionary
+            for channel in channel_id_dict.keys():
+                channel_id = channel_id_dict[channel]["id"]
+                if "channel_name" in channel_id_dict[channel].keys():
+                    channel_name = channel_id_dict[channel]["channel_name"]
+                else:
+                    channel_name = channel
 
-        # goes through keys within dictionary
-        for channel in channel_id_dict.keys():
-            channel_id = channel_id_dict[channel]["id"]
-            if "channel_name" in channel_id_dict[channel].keys():
-                channel_name = channel_id_dict[channel]["channel_name"]
-            else:
-                channel_name = channel
+                if channel in str(image):
+                    well, _, site, _, plate = image.name.split("_")
+                    plate = plate.split(".")[0]
 
-            if channel in str(image):
-                well, _, site, _, plate = image.name.split("_")
-                plate = plate.split(".")[0]
+                    new_channel_name = f"{output_folder_name}/{well}_{channel_id}_{site}_{channel_name}_{plate}.tif"
+                    Path(image).rename(Path(new_channel_name))
 
-                new_channel_name = f"{output_folder_name}/{well}_{channel_id}_{site}_{channel_name}_{plate}.tif"
-                Path(image).rename(Path(new_channel_name))
-
-        logging.info("All channels in this plate have been renamed!")
-    
+    logging.info("All channels in this plate have been renamed!")

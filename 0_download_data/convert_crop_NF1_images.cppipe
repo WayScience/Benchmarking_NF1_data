@@ -2,7 +2,7 @@ CellProfiler Pipeline: http://www.cellprofiler.org
 Version:5
 DateRevision:424
 GitHash:
-ModuleCount:13
+ModuleCount:10
 HasImagePlaneDetails:False
 
 Images:[module_num:1|svn_version:'Unknown'|variable_revision_number:2|show_window:False|notes:['To begin creating your project, use the Images module to compile a list of files and/or folders that you want to analyze. You can also specify a set of rules to include only the desired files in your selected folders.']|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
@@ -11,7 +11,7 @@ Images:[module_num:1|svn_version:'Unknown'|variable_revision_number:2|show_windo
     Select the rule criteria:and (extension does isimage) (directory doesnot containregexp "[\\\\/]\\.")
 
 Metadata:[module_num:2|svn_version:'Unknown'|variable_revision_number:6|show_window:False|notes:['The Metadata module optionally allows you to extract information describing your images (i.e, metadata) which will be stored along with your measurements. This information can be contained in the file name and/or location, or in an external file.']|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
-    Extract metadata?:No
+    Extract metadata?:Yes
     Metadata data type:Text
     Metadata types:{}
     Extraction method count:1
@@ -140,57 +140,9 @@ ColorToGray:[module_num:7|svn_version:'Unknown'|variable_revision_number:4|show_
     Relative weight of the channel:1.0
     Image name:Channel1
 
-Crop:[module_num:8|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:['All "Crop" modules take the red (Actin), blue (DAPI), and green (GFP) channels from their respective RGB format and crop them all to be 1224 (W) x 850 (L).']|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:GrayActin
-    Name the output image:CropActin
-    Select the cropping shape:Rectangle
-    Select the cropping method:Coordinates
-    Apply which cycle's cropping pattern?:Every
-    Left and right rectangle positions:0,end
-    Top and bottom rectangle positions:0,850
-    Coordinates of ellipse center:500,500
-    Ellipse radius, X direction:400
-    Ellipse radius, Y direction:200
-    Remove empty rows and columns?:All
-    Select the masking image:None
-    Select the image with a cropping mask:None
-    Select the objects:None
-
-Crop:[module_num:9|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:GrayDAPI
-    Name the output image:CropDAPI
-    Select the cropping shape:Rectangle
-    Select the cropping method:Coordinates
-    Apply which cycle's cropping pattern?:Every
-    Left and right rectangle positions:0,end
-    Top and bottom rectangle positions:0,850
-    Coordinates of ellipse center:500,500
-    Ellipse radius, X direction:400
-    Ellipse radius, Y direction:200
-    Remove empty rows and columns?:All
-    Select the masking image:None
-    Select the image with a cropping mask:None
-    Select the objects:None
-
-Crop:[module_num:10|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
-    Select the input image:GrayGFP
-    Name the output image:CropGFP
-    Select the cropping shape:Rectangle
-    Select the cropping method:Coordinates
-    Apply which cycle's cropping pattern?:Every
-    Left and right rectangle positions:0,end
-    Top and bottom rectangle positions:0,850
-    Coordinates of ellipse center:500,500
-    Ellipse radius, X direction:400
-    Ellipse radius, Y direction:200
-    Remove empty rows and columns?:All
-    Select the masking image:None
-    Select the image with a cropping mask:None
-    Select the objects:None
-
-SaveImages:[module_num:11|svn_version:'Unknown'|variable_revision_number:16|show_window:False|notes:['Save all cropped images as 8-bit .tiff files.']|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+SaveImages:[module_num:8|svn_version:'Unknown'|variable_revision_number:16|show_window:False|notes:['Save all cropped images as 16-bit .tiff files.']|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
     Select the type of image to save:Image
-    Select the image to save:CropActin
+    Select the image to save:GrayActin
     Select method for constructing file names:From image filename
     Select image name for file prefix:Actin
     Enter single file name:
@@ -208,9 +160,9 @@ SaveImages:[module_num:11|svn_version:'Unknown'|variable_revision_number:16|show
     How to save the series:T (Time)
     Save with lossless compression?:Yes
 
-SaveImages:[module_num:12|svn_version:'Unknown'|variable_revision_number:16|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+SaveImages:[module_num:9|svn_version:'Unknown'|variable_revision_number:16|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
     Select the type of image to save:Image
-    Select the image to save:CropDAPI
+    Select the image to save:GrayDAPI
     Select method for constructing file names:From image filename
     Select image name for file prefix:DAPI
     Enter single file name:
@@ -228,9 +180,9 @@ SaveImages:[module_num:12|svn_version:'Unknown'|variable_revision_number:16|show
     How to save the series:T (Time)
     Save with lossless compression?:Yes
 
-SaveImages:[module_num:13|svn_version:'Unknown'|variable_revision_number:16|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+SaveImages:[module_num:10|svn_version:'Unknown'|variable_revision_number:16|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
     Select the type of image to save:Image
-    Select the image to save:CropGFP
+    Select the image to save:GrayGFP
     Select method for constructing file names:From image filename
     Select image name for file prefix:GFP
     Enter single file name:
