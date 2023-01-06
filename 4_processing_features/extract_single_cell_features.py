@@ -11,7 +11,7 @@
 import pathlib
 import pandas as pd
 
-from pycytominer import normalize
+from pycytominer import normalize, feature_select
 from pycytominer.cyto_utils import cells, output
 
 
@@ -32,6 +32,7 @@ platemap_file = f"{cp_dir}/Metadata/platemap_NF1_CP.csv"
 # Set path with name for outputted data
 sc_output_file = pathlib.Path(f"{output_dir}/nf1_sc_cellprofiler.csv.gz")
 sc_norm_output_file = pathlib.Path(f"{output_dir}/nf1_sc_norm_cellprofiler.csv.gz")
+sc_norm_fs_output_file = pathlib.Path(f"{output_dir}/nf1_sc_norm_fs_cellprofiler.csv.gz")
 
 
 # ## Set up names for linking columns between tables in the database file
@@ -115,17 +116,39 @@ print(normalize_sc_df.shape)
 normalize_sc_df.head()
 
 
+# ## Feeature Selection
+
+# In[8]:
+
+
+feature_select_ops = [
+    "variance_threshold",
+    "correlation_threshold",
+    "blocklist",
+]
+
+feature_select_norm_sc_df = feature_select(
+    normalize_sc_df,
+    operation=feature_select_ops
+)
+
+output(feature_select_norm_sc_df, sc_norm_fs_output_file)
+
+print(feature_select_norm_sc_df.shape)
+feature_select_norm_sc_df.head()
+
+
 # ---
 # 
 # ### Visualize basic count statistics
 
-# In[8]:
+# In[9]:
 
 
 sc_df.Metadata_genotype.value_counts()
 
 
-# In[9]:
+# In[10]:
 
 
 pd.crosstab(sc_df.Metadata_genotype, sc_df.Metadata_Well)
