@@ -116,7 +116,7 @@ print(normalize_sc_df.shape)
 normalize_sc_df.head()
 
 
-# ## Feeature Selection
+# ## Feature Selection
 
 # In[8]:
 

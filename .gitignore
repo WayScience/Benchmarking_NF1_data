@@ -31,5 +31,8 @@ __pycache__/
 NF1_test
 NF1_Second_Plate_Old
 
-# Ignore test notebooks
+# ignore test notebooks
 example_code.ipynb
+
+# ignore deprecated notebooks
+5_analyze_data/notebooks/UMAP_analysis/deprecated_notebooks
