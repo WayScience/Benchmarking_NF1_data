@@ -6,7 +6,6 @@ dependencies:
   - conda-forge::jupyter=1.0.0
   - conda-forge::jupyterlab
   - conda-forge::pandas=1.4.4
-  - conda-forge::plotnine
   - conda-forge::ipykernel
   - conda-forge::nb_conda_kernels
   - conda-forge::jupyter_contrib_nbextensions
@@ -16,4 +15,3 @@ dependencies:
   - conda-forge::seaborn
   - conda-forge::umap-learn
   - conda-forge::matplotlib
-

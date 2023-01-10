@@ -1,13 +1,20 @@
+"""
+This file contains functions to assist in creating a .csv file containing 2D embeddings from 
+the NF1 normalized and feature selected morphological readouts.
+"""
+
 import pathlib
 import pandas as pd
 
 def split_data(pycytominer_output: pd.DataFrame):
     """
     split pycytominer output to metadata dataframe and np array of feature values
+
     Parameters
     ----------
     pycytominer_output : pd.DataFrame
         dataframe with pycytominer output
+
     Returns
     -------
     pd.Dataframe, np.ndarray
@@ -47,6 +54,7 @@ def merge_metadata_embeddings(
     Returns
     -------
     pd.Dataframe
+        merged dataframe with metadata and embeddings
     """
     # reset index to remove the 'Metadata_WellRow' as the index then drop the index
     metadata_dataframe = metadata_dataframe.reset_index()
