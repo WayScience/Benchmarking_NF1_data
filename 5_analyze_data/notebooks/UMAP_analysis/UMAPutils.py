@@ -6,9 +6,10 @@ the NF1 normalized and feature selected morphological readouts.
 import pathlib
 import pandas as pd
 
+
 def split_data(pycytominer_output: pd.DataFrame):
     """
-    split pycytominer output to metadata dataframe and np array of feature values
+    split pycytominer output to return metadata dataframe
 
     Parameters
     ----------
@@ -17,8 +18,8 @@ def split_data(pycytominer_output: pd.DataFrame):
 
     Returns
     -------
-    pd.Dataframe, np.ndarray
-        metadata dataframe, feature values
+    pd.Dataframe
+        metadata dataframe
     """
     # split metadata from features
     metadata_cols = [
@@ -28,18 +29,13 @@ def split_data(pycytominer_output: pd.DataFrame):
     ]
     metadata_dataframe = pycytominer_output[metadata_cols]
 
-    feature_cols = [
-        col_name
-        for col_name in pycytominer_output.columns.tolist()
-        if "Metadata" not in col_name
-    ]
-    feature_data = pycytominer_output[feature_cols].values
-
-    return metadata_dataframe, feature_data
+    return metadata_dataframe
 
 
 def merge_metadata_embeddings(
-    metadata_dataframe: pd.DataFrame, embeddings: pd.DataFrame, save_path: pathlib.Path = None
+    metadata_dataframe: pd.DataFrame,
+    embeddings: pd.DataFrame,
+    save_path: pathlib.Path = None,
 ):
     """
     merge metadata with UMAP embeddings into one dataframe
@@ -56,13 +52,6 @@ def merge_metadata_embeddings(
     pd.Dataframe
         merged dataframe with metadata and embeddings
     """
-    # reset index to remove the 'Metadata_WellRow' as the index then drop the index
-    metadata_dataframe = metadata_dataframe.reset_index()
-    metadata_dataframe = metadata_dataframe.reset_index(drop=True)
-
-    # remove index from embeddings dataframe as well to prevent IndexError
-    embeddings = embeddings.reset_index(drop=True)
-
     # put dataframes into list of where the columns should go
     dataframes = [metadata_dataframe, embeddings]
 
