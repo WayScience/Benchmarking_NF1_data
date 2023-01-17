@@ -5,7 +5,7 @@
 
 # ## Import libraries
 
-# In[1]:
+# In[8]:
 
 
 import matplotlib.pyplot as plt
@@ -16,7 +16,7 @@ import seaborn as sb
 
 # ## Read in NF1 data `csv`
 
-# In[2]:
+# In[9]:
 
 
 norm_fs_data = pathlib.Path("../../../4_processing_features/data/nf1_sc_norm_fs_cellprofiler.csv.gz")
@@ -29,7 +29,7 @@ data.head()
 
 # ## Helper function to split `csv` into metadata and features
 
-# In[3]:
+# In[10]:
 
 
 def split_data(pycytominer_output: pd.DataFrame):
@@ -60,7 +60,7 @@ def split_data(pycytominer_output: pd.DataFrame):
 
 # ## Split NF1 data `csv`
 
-# In[4]:
+# In[11]:
 
 
 metadata_dataframe, feature_data = split_data(data)
@@ -69,7 +69,7 @@ feature_data
 
 # ## Transpose the NF1 dataframe
 
-# In[5]:
+# In[12]:
 
 
 data_trans = feature_data.transpose()
@@ -78,20 +78,26 @@ data_trans
 
 # ## Create correlation heatmap
 
-# In[6]:
+# In[13]:
 
 
 data_trans_heatmap = sb.heatmap(data_trans.corr())
 
 plt.show()
 
+save_path = pathlib.Path("figures/correlation_heatmap_sc.png")
+plt.savefig(save_path, bbox_inches="tight")
+
 
 # ## Create clustermap with correlation heatmap
 
-# In[7]:
+# In[14]:
 
 
 sb.clustermap(data_trans.corr(), 
             cmap='RdBu_r',
             )
+
+save_path = pathlib.Path("figures/correlation_clustermap_sc.png")
+plt.savefig(save_path, bbox_inches="tight")
 

@@ -5,7 +5,7 @@
 
 # ## Import libraries
 
-# In[8]:
+# In[15]:
 
 
 import numpy as np
@@ -16,7 +16,7 @@ import pandas as pd
 
 # ## Set seed
 
-# In[9]:
+# In[16]:
 
 
 np.random.seed(0)
@@ -24,7 +24,7 @@ np.random.seed(0)
 
 # ## Load in NF1 data
 
-# In[10]:
+# In[17]:
 
 
 norm_fs_data = pathlib.Path("../../../4_processing_features/data/nf1_sc_norm_cellprofiler.csv.gz")
@@ -37,16 +37,16 @@ data.head()
 
 # ## Helper functions to perform KS-test and create final `csv` file with results
 
-# In[11]:
+# In[18]:
 
 
-def nf1_ks_test_two_sample(data: pd.DataFrame):
-    """seperate features by genotype and perform two sample ks-test on each feature
+def nf1_ks_test_two_sample(normalized_data: pd.DataFrame):
+    """separate features by genotype and perform two sample ks-test on each feature
 
     Parameters
     ----------
-    data : pd.Dataframe
-        pycytominer output after normalization and feature selection
+    normalized_data : pd.Dataframe
+        pycytominer output after normalization
 
     Returns
     -------
@@ -56,11 +56,11 @@ def nf1_ks_test_two_sample(data: pd.DataFrame):
     feature_results = []
 
     # divide the NF1 data based on genotype
-    null_features = data[(data["Metadata_genotype"] == "Null")]
-    wt_features = data[(data["Metadata_genotype"] == "WT")]
+    null_features = normalized_data[(normalized_data["Metadata_genotype"] == "Null")]
+    wt_features = normalized_data[(normalized_data["Metadata_genotype"] == "WT")]
 
     # iterate through the columns in the data (both of the genotype dataframes will have the same columns)
-    for column in data:
+    for column in normalized_data:
         # do not include metadata columns
         if "Metadata" not in column:
             # convert each individual column (feature) into numpy array
@@ -69,8 +69,9 @@ def nf1_ks_test_two_sample(data: pd.DataFrame):
             
             # run two-sample ks-test for each feature 
             results = ks_2samp(wt_feature, null_feature)
-            # have to seperate out namedtuple due to scipy hiding the last two results 
-            results = tuple([results.statistic, results.pvalue, results.statistic_location, results.statistic_sign])
+            # convert all keys/ks-test results (even the hidden ones due to scipy) into a dictionary 
+            # and put them as a list
+            results = tuple(list(results._asdict().values()))
             feature_results.append(results)
 
     feature_results = pd.DataFrame(feature_results, columns=["statistic", "pvalue", "statistic_location", "statistic_sign"])
@@ -112,9 +113,9 @@ def merge_features_kstest(
     return merged_dataframe
 
 
-# ## Peform two sample KS-test
+# ## Perform two sample KS-test
 
-# In[12]:
+# In[19]:
 
 
 feature_results = nf1_ks_test_two_sample(data)
@@ -123,7 +124,7 @@ feature_results
 
 # ## Take feature columns from data and create a list
 
-# In[13]:
+# In[20]:
 
 
 # find feature names in the columns from the data
@@ -141,7 +142,7 @@ feature_names
 
 # ## Save the final `csv` file with merged features and results
 
-# In[14]:
+# In[21]:
 
 
 save_path = pathlib.Path("data/nf1_kstest_two_sample_results.csv")
