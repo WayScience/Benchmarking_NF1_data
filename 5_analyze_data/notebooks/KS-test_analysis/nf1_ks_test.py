@@ -5,7 +5,7 @@
 
 # ## Import libraries
 
-# In[1]:
+# In[8]:
 
 
 import numpy as np
@@ -16,7 +16,7 @@ import pandas as pd
 
 # ## Set seed
 
-# In[2]:
+# In[9]:
 
 
 np.random.seed(0)
@@ -24,17 +24,20 @@ np.random.seed(0)
 
 # ## Load in NF1 data
 
-# In[3]:
+# In[10]:
 
 
 norm_fs_data = pathlib.Path("../../../4_processing_features/data/nf1_sc_norm_cellprofiler.csv.gz")
 
 data = pd.read_csv(norm_fs_data, compression="gzip", index_col=0)
 
+print(data.shape)
+data.head()
+
 
 # ## Helper functions to perform KS-test and create final `csv` file with results
 
-# In[4]:
+# In[11]:
 
 
 def nf1_ks_test_two_sample(data: pd.DataFrame):
@@ -52,13 +55,19 @@ def nf1_ks_test_two_sample(data: pd.DataFrame):
     """
     feature_results = []
 
+    # divide the NF1 data based on genotype
     null_features = data[(data["Metadata_genotype"] == "Null")]
     wt_features = data[(data["Metadata_genotype"] == "WT")]
 
+    # iterate through the columns in the data (both of the genotype dataframes will have the same columns)
     for column in data:
+        # do not include metadata columns
         if "Metadata" not in column:
+            # convert each individual column (feature) into numpy array
             null_feature = null_features[column].to_numpy()
             wt_feature = wt_features[column].to_numpy()
+            
+            # run two-sample ks-test for each feature 
             results = ks_2samp(wt_feature, null_feature)
             # have to seperate out namedtuple due to scipy hiding the last two results 
             results = tuple([results.statistic, results.pvalue, results.statistic_location, results.statistic_sign])
@@ -68,10 +77,9 @@ def nf1_ks_test_two_sample(data: pd.DataFrame):
 
     return feature_results
 
-
 def merge_features_kstest(
     feature_results: pd.DataFrame,
-    column_names: list,
+    feature_names: list,
     save_path: pathlib.Path = None,
 ):
     """
@@ -92,7 +100,7 @@ def merge_features_kstest(
         merged dataframe with features and ks-test results
     """
     # put dataframes into list of where the columns should go
-    dataframes = [column_names, feature_results]
+    dataframes = [feature_names, feature_results]
 
     # merge dataframes together
     merged_dataframe = pd.concat(dataframes, axis=1)
@@ -106,7 +114,7 @@ def merge_features_kstest(
 
 # ## Peform two sample KS-test
 
-# In[5]:
+# In[12]:
 
 
 feature_results = nf1_ks_test_two_sample(data)
@@ -115,23 +123,28 @@ feature_results
 
 # ## Take feature columns from data and create a list
 
-# In[6]:
+# In[13]:
 
 
-features = data.iloc[:,12:]
-column_names = features.columns.tolist()
-column_names = pd.DataFrame(column_names)
-column_names.columns = ["Features"]
+# find feature names in the columns from the data
+feature_names = [
+        col_name
+        for col_name in data.columns.tolist()
+        if "Metadata" not in col_name
+    ]
 
-column_names
+feature_names = pd.DataFrame(feature_names)
+feature_names.columns = ["Features"]
+
+feature_names
 
 
 # ## Save the final `csv` file with merged features and results
 
-# In[7]:
+# In[14]:
 
 
 save_path = pathlib.Path("data/nf1_kstest_two_sample_results.csv")
 
-merge_features_kstest(feature_results, column_names, save_path)
+merge_features_kstest(feature_results, feature_names, save_path)
 

@@ -22,7 +22,9 @@ import seaborn as sb
 norm_fs_data = pathlib.Path("../../../4_processing_features/data/nf1_sc_norm_fs_cellprofiler.csv.gz")
 
 data = pd.read_csv(norm_fs_data, index_col=0)
-data
+
+print(data.shape)
+data.head()
 
 
 # ## Helper function to split `csv` into metadata and features
