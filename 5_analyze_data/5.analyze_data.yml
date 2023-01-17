@@ -9,7 +9,7 @@ dependencies:
   - conda-forge::ipykernel
   - conda-forge::nb_conda_kernels
   - conda-forge::jupyter_contrib_nbextensions
-  - conda-forge::scipy=1.7
+  - conda-forge::scipy=1.10.0
   - conda-forge::numpy=1.22
   - conda-forge::scikit-learn
   - conda-forge::seaborn
