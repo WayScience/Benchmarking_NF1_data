@@ -9,7 +9,6 @@
 
 
 import pathlib
-import pandas as pd
 
 from pycytominer import feature_select
 from pycytominer.cyto_utils import DeepProfiler_processing, output, infer_cp_features
@@ -113,7 +112,6 @@ derived_features = [
 feature_select_ops = [
     "variance_threshold",
     "correlation_threshold",
-    "blocklist",
 ]
 
 feature_select_norm_nuc = feature_select(
@@ -193,7 +191,6 @@ derived_features = [
 feature_select_ops = [
     "variance_threshold",
     "correlation_threshold",
-    "blocklist",
 ]
 
 feature_select_norm_cyto = feature_select(
