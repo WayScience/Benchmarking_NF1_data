@@ -44,7 +44,7 @@ lm_df$channel_cleaned <-
 print(dim(lm_df))
 head(lm_df, 10)
 
-(
+lm_fig_gg <- (
     ggplot(lm_df, aes(x = cell_count_coef, y = abs(WT_coef)))
     + geom_point(aes(size = r2_score, color = channel_cleaned))
     + geom_vline(xintercept = 0, linetype = "dashed", color = "red")
@@ -58,3 +58,8 @@ head(lm_df, 10)
     + xlab("Cell count contribution")
     + ggtitle("How features contribute to NF1 genotype and cell density")
 )
+
+lm_fig_gg
+
+# Output figure
+ggsave(lm_fig, lm_fig_gg, dpi = 500, height = 6, width = 6)
