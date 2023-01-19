@@ -4,7 +4,7 @@ suppressPackageStartupMessages(library(dplyr))
 output_fig_dir <- "figures"
 
 ks_test_fig <- file.path(output_fig_dir, "ks_test_cp_genotype.png")
-actin_distrib_fig <- file.path(output_fig_dir, "top_actin_feature_distrib.png")
+actin_distrib_fig <- file.path(output_fig_dir, "top_er_feature_distrib.png")
 
 # Load and process KS-test data
 ks_file <- file.path("data", "nf1_kstest_two_sample_results.csv")
@@ -85,22 +85,22 @@ ks_test_gg
 # Output figure
 ggsave(ks_test_fig, ks_test_gg, dpi = 500, height = 6, width = 6)
 
-top_actin_feature <- ks_df %>%
-    dplyr::filter(channel_cleaned == "actin") %>%
+top_er_feature <- ks_df %>%
+    dplyr::filter(channel_cleaned == "ER") %>%
     dplyr::select(Features)
 
-top_actin_feature <- head(top_actin_feature, 1) %>% dplyr::pull(Features)
-top_actin_feature
+top_er_feature <- head(top_er_feature, 1) %>% dplyr::pull(Features)
+top_er_feature
 
-top_actin_feature_gg = (
-    ggplot(cp_df, aes(x = .data[[top_actin_feature]]))
+top_er_feature_gg = (
+    ggplot(cp_df, aes(x = .data[[top_er_feature]]))
     + geom_density(aes(fill = Metadata_genotype), alpha = 0.7)
     + theme_bw()
     + ylab("Density")
     + guides(fill = guide_legend(title = "Genotype"))
 )
 
-top_actin_feature_gg
+top_er_feature_gg
 
 # Output figure
-ggsave(actin_distrib_fig, top_actin_feature_gg, dpi = 500, height = 6, width = 6)
+ggsave(actin_distrib_fig, top_er_feature_gg, dpi = 500, height = 6, width = 6)
