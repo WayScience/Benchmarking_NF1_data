@@ -1,26 +1,10 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# ## Visualize the results of the KS-test
-
-# In[1]:
-
-
 suppressPackageStartupMessages(library(ggplot2))
 suppressPackageStartupMessages(library(dplyr))
-
-
-# In[2]:
-
 
 output_fig_dir <- "figures"
 
 ks_test_fig <- file.path(output_fig_dir, "ks_test_cp_genotype.png")
 actin_distrib_fig <- file.path(output_fig_dir, "top_actin_feature_distrib.png")
-
-
-# In[3]:
-
 
 # Load and process KS-test data
 ks_file <- file.path("data", "nf1_kstest_two_sample_results.csv")
@@ -61,10 +45,6 @@ ks_df$channel_cleaned <-
 print(dim(ks_df))
 head(ks_df, 10)
 
-
-# In[4]:
-
-
 # Load feature data
 data_dir <-file.path("..", "..", "..", "4_processing_features", "data")
 cp_file <- file.path(data_dir, "nf1_sc_norm_cellprofiler.csv.gz")
@@ -84,20 +64,10 @@ cp_df <- readr::read_csv(
 print(dim(cp_df))
 head(cp_df, 3)
 
-
-# ## Visualize KS test
-
-# In[5]:
-
-
 # Determine a bonferroni adjusted alpha value threshold
 alpha <- 0.05
 bon_alpha <- alpha / dim(ks_df)[1]
 bon_alpha
-
-
-# In[6]:
-
 
 ks_test_gg <- (
     ggplot(ks_df, aes(x = signed_statistic, y = -log10(pvalue)))
@@ -112,18 +82,8 @@ ks_test_gg <- (
 
 ks_test_gg
 
-
-# In[7]:
-
-
 # Output figure
 ggsave(ks_test_fig, ks_test_gg, dpi = 500, height = 6, width = 6)
-
-
-# ## Visualize distribution of top actin feature
-
-# In[8]:
-
 
 top_actin_feature <- ks_df %>%
     dplyr::filter(channel_cleaned == "actin") %>%
@@ -131,10 +91,6 @@ top_actin_feature <- ks_df %>%
 
 top_actin_feature <- head(top_actin_feature, 1) %>% dplyr::pull(Features)
 top_actin_feature
-
-
-# In[9]:
-
 
 top_actin_feature_gg = (
     ggplot(cp_df, aes(x = .data[[top_actin_feature]]))
@@ -146,10 +102,5 @@ top_actin_feature_gg = (
 
 top_actin_feature_gg
 
-
-# In[10]:
-
-
 # Output figure
 ggsave(actin_distrib_fig, top_actin_feature_gg, dpi = 500, height = 6, width = 6)
-
