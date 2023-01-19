@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Create correlation heatmap from normalized and feature selected NF1 data
+# # Create correlation heatmap from normalized and feature selected NF1 data for both CellProfiler and DeepProfiler
 
 # ## Import libraries
 
-# In[8]:
+# In[1]:
 
 
 import matplotlib.pyplot as plt
@@ -13,10 +13,16 @@ import pathlib
 import pandas as pd
 import seaborn as sb
 
+import sys
+sys.path.append("../UMAP_analysis/")
+import UMAPutils as utils
 
-# ## Read in NF1 data `csv`
 
-# In[9]:
+# ## CellProfiler data
+
+# ### Read in NF1 data `csv`
+
+# In[2]:
 
 
 norm_fs_data = pathlib.Path("../../../4_processing_features/data/nf1_sc_norm_fs_cellprofiler.csv.gz")
@@ -27,58 +33,27 @@ print(data.shape)
 data.head()
 
 
-# ## Helper function to split `csv` into metadata and features
+# ### Split NF1 data `csv`
 
-# In[10]:
-
-
-def split_data(pycytominer_output: pd.DataFrame):
-    """
-    split pycytominer output to return metadata dataframe
-
-    Parameters
-    ----------
-    pycytominer_output : pd.DataFrame
-        dataframe with pycytominer output
-
-    Returns
-    -------
-    pd.Dataframe, np.array
-        metadata dataframe, feature_data
-    """
-    # split metadata from features
-    metadata_cols = [
-        col_name
-        for col_name in pycytominer_output.columns.tolist()
-        if "Metadata" in col_name
-    ]
-    metadata_dataframe = pycytominer_output[metadata_cols]
-    feature_data = pycytominer_output[pycytominer_output.columns.difference(metadata_cols)]
-
-    return metadata_dataframe, feature_data
+# In[3]:
 
 
-# ## Split NF1 data `csv`
-
-# In[11]:
-
-
-metadata_dataframe, feature_data = split_data(data)
+metadata_dataframe, feature_data = utils.split_data(data)
 feature_data
 
 
-# ## Transpose the NF1 dataframe
+# ### Transpose the NF1 dataframe
 
-# In[12]:
+# In[4]:
 
 
 data_trans = feature_data.transpose()
 data_trans
 
 
-# ## Create correlation heatmap
+# ### Create correlation heatmap
 
-# In[13]:
+# In[5]:
 
 
 data_trans_heatmap = sb.heatmap(data_trans.corr())
@@ -89,9 +64,9 @@ save_path = pathlib.Path("figures/correlation_heatmap_sc.png")
 plt.savefig(save_path, bbox_inches="tight")
 
 
-# ## Create clustermap with correlation heatmap
+# ### Create clustermap with correlation heatmap
 
-# In[14]:
+# In[6]:
 
 
 sb.clustermap(data_trans.corr(), 
@@ -100,4 +75,95 @@ sb.clustermap(data_trans.corr(),
 
 save_path = pathlib.Path("figures/correlation_clustermap_sc.png")
 plt.savefig(save_path, bbox_inches="tight")
+
+
+# ## DeepProfiler data
+
+# In[7]:
+
+
+norm_fs_data_nuc = pathlib.Path("../../../4_processing_features/data/nf1_sc_norm_fs_deepprofiler_nuc.csv.gz")
+norm_fs_data_cyto = pathlib.Path("../../../4_processing_features/data/nf1_sc_norm_fs_deepprofiler_cyto.csv.gz")
+
+data_nuc = pd.read_csv(norm_fs_data_nuc)
+data_cyto = pd.read_csv(norm_fs_data_cyto)
+
+print(data_nuc.shape)
+data_nuc.head()
+
+
+# In[8]:
+
+
+metadata_dataframe_nuc, feature_data_nuc = utils.split_data(data_nuc)
+
+feature_data_nuc = feature_data_nuc.drop(['Location_Center_X', 'Location_Center_Y'], axis=1)
+
+print(feature_data_nuc.shape)
+feature_data_nuc.head()
+
+
+# In[9]:
+
+
+metadata_dataframe_cyto, feature_data_cyto = utils.split_data(data_cyto)
+
+feature_data_cyto = feature_data_cyto.drop(['Location_Center_X', 'Location_Center_Y'], axis=1)
+
+print(feature_data_cyto.shape)
+feature_data_cyto.head()
+
+
+# In[10]:
+
+
+data_trans_nuc = feature_data_nuc.transpose()
+data_trans_cyto = feature_data_cyto.transpose()
+
+print(data_trans_nuc.shape)
+data_trans_nuc.head()
+
+
+# In[11]:
+
+
+data_trans_nuc_heatmap = sb.heatmap(data_trans_nuc.corr())
+
+plt.show()
+
+
+# In[12]:
+
+
+data_trans_cyto_heatmap = sb.heatmap(data_trans_cyto.corr())
+
+plt.show()
+
+
+# In[13]:
+
+
+sb.clustermap(data_trans_nuc.corr(), 
+            cmap='RdBu_r',
+            )
+
+save_path = pathlib.Path("figures/correlation_clustermap_sc_dp_nuc.png")
+plt.savefig(save_path, bbox_inches="tight")
+
+
+# In[14]:
+
+
+sb.clustermap(data_trans_cyto.corr(), 
+            cmap='RdBu_r',
+            )
+
+save_path = pathlib.Path("figures/correlation_clustermap_sc_dp_cyto.png")
+plt.savefig(save_path, bbox_inches="tight")
+
+
+# In[ ]:
+
+
+
 
