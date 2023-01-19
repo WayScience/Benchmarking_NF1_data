@@ -28,8 +28,9 @@ def split_data(pycytominer_output: pd.DataFrame):
         if "Metadata" in col_name
     ]
     metadata_dataframe = pycytominer_output[metadata_cols]
+    feature_data = pycytominer_output[pycytominer_output.columns.difference(metadata_cols)]
 
-    return metadata_dataframe
+    return metadata_dataframe, feature_data
 
 
 def merge_metadata_embeddings(
