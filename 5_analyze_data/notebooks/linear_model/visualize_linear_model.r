@@ -45,8 +45,8 @@ print(dim(lm_df))
 head(lm_df, 10)
 
 lm_fig_gg <- (
-    ggplot(lm_df, aes(x = cell_count_coef, y = abs(WT_coef)))
-    + geom_point(aes(size = r2_score, color = channel_cleaned))
+    ggplot(lm_df, aes(x = cell_count_coef, y = WT_coef))
+    + geom_point(aes(size = r2_score, color = channel_cleaned), alpha = 0.7)
     + geom_vline(xintercept = 0, linetype = "dashed", color = "red")
     + geom_density2d(color="black", show.legend = FALSE)
     + theme_bw()
@@ -54,8 +54,8 @@ lm_fig_gg <- (
         color = guide_legend(title = "Channel\n(if applicable)", order = 1),
         size = guide_legend(title = "R2 score")
     )
-    + ylab("Genotype contribution")
-    + xlab("Cell count contribution")
+    + ylab("WT genotype contribution (LM beta coefficient)")
+    + xlab("Cell count contribution (LM beta coefficient)")
     + ggtitle("How features contribute to NF1 genotype and cell density")
 )
 
