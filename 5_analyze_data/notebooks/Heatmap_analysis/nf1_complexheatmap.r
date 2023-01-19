@@ -5,8 +5,8 @@ suppressPackageStartupMessages(library(dplyr))
 input_data_dir <- file.path("..", "..", "..", "4_processing_features", "data")
 output_figure_dir <- "figures"
 
-cp_heatmap_file <- file.path(output_figure_dir, "cp_complex_heatmap.pdf")
-dp_heatmap_file <- file.path(output_figure_dir, "dp_complex_heatmap.pdf")
+cp_heatmap_file_noext <- file.path(output_figure_dir, "cp_complex_heatmap")
+dp_heatmap_file_noext <- file.path(output_figure_dir, "dp_complex_heatmap")
 
 # Set heatmap colors
 well_cols = c(
@@ -79,9 +79,15 @@ ht <- Heatmap(
 draw(ht)
 
 # Save heatmap to file
-pdf(cp_heatmap_file)
+pdf(paste0(cp_heatmap_file_noext, ".pdf"))
 draw(ht)
 dev.off()
+
+png(paste0(cp_heatmap_file_noext, ".png"), width = 6.5, height = 6, units = "in", res = 500)
+draw(ht)
+dev.off()
+
+
 
 # Load data
 dp_file <- file.path(input_data_dir, "nf1_sc_norm_fs_deepprofiler_nuc.csv.gz")
@@ -150,6 +156,10 @@ ht <- Heatmap(
 draw(ht)
 
 # Save heatmap to file
-pdf(dp_heatmap_file)
+pdf(paste0(dp_heatmap_file_noext, ".pdf"))
+draw(ht)
+dev.off()
+
+png(paste0(dp_heatmap_file_noext, ".png"), width = 6.5, height = 6, units = "in", res = 500)
 draw(ht)
 dev.off()
