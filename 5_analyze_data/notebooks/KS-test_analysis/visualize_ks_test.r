@@ -4,7 +4,7 @@ suppressPackageStartupMessages(library(dplyr))
 output_fig_dir <- "figures"
 
 ks_test_fig <- file.path(output_fig_dir, "ks_test_cp_genotype.png")
-actin_distrib_fig <- file.path(output_fig_dir, "top_er_feature_distrib.png")
+er_distrib_fig <- file.path(output_fig_dir, "top_er_feature_distrib.png")
 
 # Load and process KS-test data
 ks_file <- file.path("data", "nf1_kstest_two_sample_results.csv")
@@ -103,4 +103,4 @@ top_er_feature_gg = (
 top_er_feature_gg
 
 # Output figure
-ggsave(actin_distrib_fig, top_er_feature_gg, dpi = 500, height = 6, width = 6)
+ggsave(er_distrib_fig, top_er_feature_gg, dpi = 500, height = 6, width = 6)
