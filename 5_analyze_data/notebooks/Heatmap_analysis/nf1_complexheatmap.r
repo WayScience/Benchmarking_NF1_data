@@ -87,8 +87,6 @@ png(paste0(cp_heatmap_file_noext, ".png"), width = 6.5, height = 6, units = "in"
 draw(ht)
 dev.off()
 
-
-
 # Load data
 dp_file <- file.path(input_data_dir, "nf1_sc_norm_fs_deepprofiler_nuc.csv.gz")
 
