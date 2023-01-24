@@ -4,6 +4,20 @@ In this module, we present our pipeline for processing outputted `.sqlite` file 
 
 The processed CP features are saved into compressed `.csv.gz` and DP features are saved as `.npz` files for use during statistical analysis.
 
+We performed image-based analysis on 2 plates using a total of 3 pipelines (**note:** plate 2 has not been run through the DP method). The pipelines include:
+
+1. CellProfiler for all parts of the process (e.g. IC, segmentation, and feature extraction)
+2. PyBaSiC IC with CellProfiler segmentation and feature extraction
+3. PyBaSiC IC, Cellpose segmentation, and DeepProfiler feature extraction
+
+| Illumination Correction | Segmentation | Feature Extraction |
+| :---- | :----- | :---------- |
+| CellProfiler | CellProfiler | CellProfiler |
+| PyBaSiC | CellProfiler | CellProfiler |
+| PyBaSiC | Cellpose | DeepProfiler |
+
+> Table 1. Detailing the softwares used for each part of the image-based analysis pipeline per method.
+
 ## Pycytominer
 
 We use [Pycytominer](https://github.com/cytomining/pycytominer) to perform the merging, normalization, and feature selection of the NF1 single cell features.
