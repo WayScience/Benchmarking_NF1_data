@@ -36,7 +36,3 @@ example_code.ipynb
 
 # ignore deprecated notebooks
 5_analyze_data/notebooks/UMAP_analysis/deprecated_notebooks
-
-# ignore cellpose plugin output and pipeline due to barrier to complete rest of analysis
-CellProfiler_pipelines/Analysis_Output/Plate1_Output/NF1_data_pybasic_cellpose_plate1.sqlite
-CellProfiler_pipelines/Pipelines/NF1_analysis_cp_plugin.cpproj

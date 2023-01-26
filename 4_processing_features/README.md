@@ -8,12 +8,16 @@ We performed image-based analysis on 2 plates using a total of 3 pipelines (**no
 
 1. CellProfiler for all parts of the process (e.g. IC, segmentation, and feature extraction)
 2. PyBaSiC IC with CellProfiler segmentation and feature extraction
-3. PyBaSiC IC, Cellpose segmentation, and DeepProfiler feature extraction
+3. PyBaSiC IC, Cellpose segmentation (within CellProfiler), CellProfiler feature extraction
+4. CellProfiler IC, Cellpose segmentation (within CellProfiler), CellProfiler feature extraction
+5. PyBaSiC IC, Cellpose segmentation, and DeepProfiler feature extraction
 
 | Illumination Correction | Segmentation | Feature Extraction |
 | :---- | :----- | :---------- |
 | CellProfiler | CellProfiler | CellProfiler |
 | PyBaSiC | CellProfiler | CellProfiler |
+| PyBaSiC | Cellpose | CellProfiler |
+| CellProfiler | Cellpose | CellProfiler |
 | PyBaSiC | Cellpose | DeepProfiler |
 
 > Table 1. Detailing the softwares used for each part of the image-based analysis pipeline per method.
@@ -28,6 +32,10 @@ For more information regarding the functions that we used, please see [the docum
 
 CellProfiler and DeepProfiler features can display a variety of distributions across cells.
 To facilitate analysis, we standardize all features (z-score) to the same scale.
+
+### Feature selection
+
+There are many features that are collected when using both CellProfiler and DeepProfiler. But, there are many features that are irrelevant due to the lack difference between single cells. Feature selection will only keep features that are more likely to show significance due to more variety in values.
 
 ---
 
@@ -44,17 +52,47 @@ conda env create -f 4.processing_features.yml
 
 ## Step 2: Normalize and Feature Select Single Cell Features
 
-### Step 2a: Set Up Paths
+There are a total of two plates currently using 5 different pipeline methods. This repository splits the extraction notebooks by plate and by the feature extraction method.
 
-Within the [extract_sc_features_cp.ipynb](4_processing_features/extract_sc_features_cp.ipynb) notebook, you can change the paths to reflect the local paths or names for your machine (***IF* you changed anything from the original pipeline**) for the various parameters (e.g. CellProfiler directory, output directory, path to sqlite file, etc.)
+├── 4_processing_features
+│   ├── data
+│   │   ├── Plate1
+│   │   │   ├── CellProfiler
+│   │   │   │   ├── `.csv.gz` files
+│   │   │   ├── DeepProfiler
+│   │   │   │   ├── `.csv.gz` files
+│   │   ├── Plate2
+│   │   │   ├── CellProfiler
+│   │   │   │   ├── `.csv.gz` files
+│   │   │   ├── DeepProfiler
+│   │   │   │   ├── `.csv.gz` files
+│   ├── Plate1
+│   │   ├── CellProfiler
+│   │   │   │   ├── `.sh` file
+│   │   │   │   ├── scripts
+│   │   │   │   ├── `.ipynb` notebook files
+│   │   ├── DeepProfiler
+│   │   │   │   ├── `.sh` file
+│   │   │   │   ├── scripts
+│   │   │   │   ├── `.ipynb` notebook files
+│   ├── Plate2
+│   │   ├── CellProfiler
+│   │   │   │   ├── `.sh` file
+│   │   │   │   ├── scripts
+│   │   │   │   ├── `.ipynb` notebook files
+│   │   ├── DeepProfiler
+│   │   │   │   ├── `.sh` file
+│   │   │   │   ├── scripts
+│   │   │   │   ├── `.ipynb` notebook files
 
-As well, you can update the paths with the [extract_sc_features_dp.ipynb](4_processing_features/extract_sc_features_dp.ipynb) notebook if the paths to the project are different on your local machine.
-
-### Step 2b: Run Extract Single Cell Features
-
-Using the code below, run the notebook to extract and normalize single cell features from CellProfiler and DeepProfiler.
+Using the code below, the file will run the notebook(s) to extract single cell features in depending on the directory you are in. An example is provided below where single cell features are extracted from Plate1 CellProfiler methods.
 
 ```bash
 # Run this script in terminal
-bash 4.extract_sc_features.sh
+cd 4_processing_features/Plate1/CellProfiler
+```
+
+```bash
+# Run this script in terminal
+bash extract_sc_features.sh
 ```
