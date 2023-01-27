@@ -1,6 +1,6 @@
 # 4. Processing Extracted Single Cell Features 
 
-In this module, we present our pipeline for processing outputted `.sqlite` file with single cell features from CellProfiler (CP) and DeepProfiler (DP).
+In this module, we present our pipeline for processing outputted `.sqlite` file with single cell features from [CellProfiler](https://cellprofiler.org/) (CP) and [DeepProfiler](https://github.com/cytomining/DeepProfiler) (DP).
 
 The processed CP features are saved into compressed `.csv.gz` and DP features are saved as `.npz` files for use during statistical analysis.
 
@@ -20,7 +20,7 @@ We performed image-based analysis on 2 plates using a total of 3 pipelines (**no
 | CellProfiler | Cellpose | CellProfiler |
 | PyBaSiC | Cellpose | DeepProfiler |
 
-> Table 1. Detailing the softwares used for each part of the image-based analysis pipeline per method.
+> Table 1. Detailing the software used for each part of the image-based analysis pipeline per method.
 
 ## Pycytominer
 
@@ -35,7 +35,9 @@ To facilitate analysis, we standardize all features (z-score) to the same scale.
 
 ### Feature selection
 
-There are many features that are collected when using both CellProfiler and DeepProfiler. But, there are many features that are irrelevant due to the lack difference between single cells. Feature selection will only keep features that are more likely to show significance due to more variety in values.
+There are many features that are collected when using both CellProfiler and DeepProfiler. 
+But, there are many features that are irrelevant due to the lack difference between single cells. 
+Feature selection will only keep features that are more likely to show significance due to more variety in values.
 
 ---
 
@@ -54,6 +56,7 @@ conda env create -f 4.processing_features.yml
 
 There are a total of two plates currently using 5 different pipeline methods. This repository splits the extraction notebooks by plate and by the feature extraction method.
 
+```text
 ├── 4_processing_features
 │   ├── data
 │   │   ├── Plate1
@@ -84,6 +87,7 @@ There are a total of two plates currently using 5 different pipeline methods. Th
 │   │   │   │   ├── `.sh` file
 │   │   │   │   ├── scripts
 │   │   │   │   ├── `.ipynb` notebook files
+```
 
 Using the code below, the file will run the notebook(s) to extract single cell features in depending on the directory you are in. An example is provided below where single cell features are extracted from Plate1 CellProfiler methods.
 
