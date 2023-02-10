@@ -2,7 +2,7 @@ CellProfiler Pipeline: http://www.cellprofiler.org
 Version:5
 DateRevision:424
 GitHash:
-ModuleCount:18
+ModuleCount:19
 HasImagePlaneDetails:False
 
 Images:[module_num:1|svn_version:'Unknown'|variable_revision_number:2|show_window:False|notes:['To begin creating your project, use the Images module to compile a list of files and/or folders that you want to analyze. You can also specify a set of rules to include only the desired files in your selected folders.']|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
@@ -137,10 +137,10 @@ IdentifyTertiaryObjects:[module_num:7|svn_version:'Unknown'|variable_revision_nu
     Name the tertiary objects to be identified:Cytoplasm
     Shrink smaller object prior to subtraction?:Yes
 
-MeasureColocalization:[module_num:8|svn_version:'Unknown'|variable_revision_number:5|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+MeasureColocalization:[module_num:8|svn_version:'Unknown'|variable_revision_number:5|show_window:False|notes:['Measure whole image and within objects ']|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
     Select images to measure:DAPI, GFP, RFP
     Set threshold as percentage of maximum intensity for the images:15.0
-    Select where to measure correlation:Within objects
+    Select where to measure correlation:Both
     Select objects to measure:Cells, Cytoplasm, Nuclei
     Run all metrics?:Yes
     Calculate correlation and slope metrics?:Yes
@@ -150,7 +150,7 @@ MeasureColocalization:[module_num:8|svn_version:'Unknown'|variable_revision_numb
     Calculate the Manders coefficients using Costes auto threshold?:Yes
     Method for Costes thresholding:Faster
 
-MeasureGranularity:[module_num:9|svn_version:'Unknown'|variable_revision_number:4|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+MeasureGranularity:[module_num:9|svn_version:'Unknown'|variable_revision_number:4|show_window:False|notes:['Measure within objects']|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
     Select images to measure:DAPI, GFP, RFP
     Measure within objects?:Yes
     Select objects to measure:Cells, Cytoplasm, Nuclei
@@ -159,18 +159,27 @@ MeasureGranularity:[module_num:9|svn_version:'Unknown'|variable_revision_number:
     Radius of structuring element:10
     Range of the granular spectrum:16
 
-MeasureObjectIntensity:[module_num:10|svn_version:'Unknown'|variable_revision_number:4|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+MeasureGranularity:[module_num:10|svn_version:'Unknown'|variable_revision_number:4|show_window:False|notes:['Measure whole images']|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select images to measure:DAPI, GFP, RFP
+    Measure within objects?:No
+    Select objects to measure:Cells, Cytoplasm, Nuclei
+    Subsampling factor for granularity measurements:0.25
+    Subsampling factor for background reduction:0.25
+    Radius of structuring element:10
+    Range of the granular spectrum:16
+
+MeasureObjectIntensity:[module_num:11|svn_version:'Unknown'|variable_revision_number:4|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
     Select images to measure:DAPI, GFP, RFP
     Select objects to measure:Cells, Cytoplasm, Nuclei
 
-MeasureImageIntensity:[module_num:11|svn_version:'Unknown'|variable_revision_number:4|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+MeasureImageIntensity:[module_num:12|svn_version:'Unknown'|variable_revision_number:4|show_window:False|notes:['Changed "enclosed by objects" parameter to No since we want a whole image measurement']|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
     Select images to measure:DAPI, GFP, RFP
-    Measure the intensity only from areas enclosed by objects?:Yes
+    Measure the intensity only from areas enclosed by objects?:No
     Select input object sets:Cells, Cytoplasm, Nuclei
     Calculate custom percentiles:No
     Specify percentiles to measure:10,90
 
-MeasureObjectNeighbors:[module_num:12|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+MeasureObjectNeighbors:[module_num:13|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
     Select objects to measure:Cells
     Select neighboring objects to measure:Cells
     Method to determine neighbors:Within a specified distance
@@ -183,7 +192,7 @@ MeasureObjectNeighbors:[module_num:12|svn_version:'Unknown'|variable_revision_nu
     Name the output image:PercentTouching
     Select colormap:Oranges
 
-MeasureObjectNeighbors:[module_num:13|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+MeasureObjectNeighbors:[module_num:14|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
     Select objects to measure:Nuclei
     Select neighboring objects to measure:Nuclei
     Method to determine neighbors:Within a specified distance
@@ -196,7 +205,7 @@ MeasureObjectNeighbors:[module_num:13|svn_version:'Unknown'|variable_revision_nu
     Name the output image:PercentTouching
     Select colormap:Oranges
 
-MeasureObjectNeighbors:[module_num:14|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+MeasureObjectNeighbors:[module_num:15|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
     Select objects to measure:Cells
     Select neighboring objects to measure:Cells
     Method to determine neighbors:Adjacent
@@ -209,7 +218,7 @@ MeasureObjectNeighbors:[module_num:14|svn_version:'Unknown'|variable_revision_nu
     Name the output image:PercentTouching
     Select colormap:Oranges
 
-MeasureObjectIntensityDistribution:[module_num:15|svn_version:'Unknown'|variable_revision_number:6|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+MeasureObjectIntensityDistribution:[module_num:16|svn_version:'Unknown'|variable_revision_number:6|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
     Select images to measure:DAPI, GFP, RFP
     Hidden:3
     Hidden:1
@@ -229,20 +238,20 @@ MeasureObjectIntensityDistribution:[module_num:15|svn_version:'Unknown'|variable
     Number of bins:4
     Maximum radius:100
 
-MeasureObjectSizeShape:[module_num:16|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+MeasureObjectSizeShape:[module_num:17|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
     Select object sets to measure:Cells, Cytoplasm, Nuclei
     Calculate the Zernike features?:Yes
     Calculate the advanced features?:No
 
-MeasureTexture:[module_num:17|svn_version:'Unknown'|variable_revision_number:7|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+MeasureTexture:[module_num:18|svn_version:'Unknown'|variable_revision_number:7|show_window:False|notes:['Measure texture within objects and the whole images']|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
     Select images to measure:DAPI, GFP, RFP
     Select objects to measure:Cells, Cytoplasm, Nuclei
     Enter how many gray levels to measure the texture at:256
     Hidden:1
-    Measure whole images or objects?:Objects
+    Measure whole images or objects?:Both
     Texture scale to measure:3
 
-ExportToDatabase:[module_num:18|svn_version:'Unknown'|variable_revision_number:28|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+ExportToDatabase:[module_num:19|svn_version:'Unknown'|variable_revision_number:28|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
     Database type:SQLite
     Database name:DefaultDB
     Add a prefix to table names?:No
