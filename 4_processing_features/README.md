@@ -54,49 +54,18 @@ conda env create -f 4.processing_features.yml
 
 ## Step 2: Normalize and Feature Select Single Cell Features
 
-There are a total of two plates currently using 5 different pipeline methods. This repository splits the extraction notebooks by plate and by the feature extraction method.
+There are a total of two plates currently using 5 different pipeline methods (except for plate 2 which does not use DeepProfiler at this time). 
+There are currently a total of 3 notebooks:
 
-```text
-├── 4_processing_features
-│   ├── data
-│   │   ├── Plate1
-│   │   │   ├── CellProfiler
-│   │   │   │   ├── `.csv.gz` files
-│   │   │   ├── DeepProfiler
-│   │   │   │   ├── `.csv.gz` files
-│   │   ├── Plate2
-│   │   │   ├── CellProfiler
-│   │   │   │   ├── `.csv.gz` files
-│   │   │   ├── DeepProfiler
-│   │   │   │   ├── `.csv.gz` files
-│   ├── Plate1
-│   │   ├── CellProfiler
-│   │   │   │   ├── `.sh` file
-│   │   │   │   ├── scripts
-│   │   │   │   ├── `.ipynb` notebook files
-│   │   ├── DeepProfiler
-│   │   │   │   ├── `.sh` file
-│   │   │   │   ├── scripts
-│   │   │   │   ├── `.ipynb` notebook files
-│   ├── Plate2
-│   │   ├── CellProfiler
-│   │   │   │   ├── `.sh` file
-│   │   │   │   ├── scripts
-│   │   │   │   ├── `.ipynb` notebook files
-│   │   ├── DeepProfiler
-│   │   │   │   ├── `.sh` file
-│   │   │   │   ├── scripts
-│   │   │   │   ├── `.ipynb` notebook files
-```
+1. [plate1_extract_sc_cp.ipynb](plate1_extract_sc_cp.ipynb): This notebook will run through all four methods that use CellProfiler as the feature extraction software for plate 1 data.
+2. [plate2_extract_sc_cp.ipynb](plate2_extract_sc_cp.ipynb): This notebook will run through all four methods that use CellProfiler as the feature extraction software for plate 2 data.
+3. [plate1_extract_sc_dp.ipynb](plate1_extract_sc_dp.ipynb): This notebook will run through the one method that uses DeepProfiler as the feature extraction software for plate 1 data.
 
-Using the code below, the file will run the notebook(s) to extract single cell features in depending on the directory you are in. An example is provided below where single cell features are extracted from Plate1 CellProfiler methods.
+Using the code below, you can run through all notebooks to extract all of the data for both plate 1 and plate 2.
+
+**Note:** Make sure the `4.process-nf1-features` conda environment is activated.
 
 ```bash
 # Run this script in terminal
-cd 4_processing_features/Plate1/CellProfiler
-```
-
-```bash
-# Run this script in terminal
-bash extract_sc_features.sh
+bash extract_single_cells.sh
 ```
