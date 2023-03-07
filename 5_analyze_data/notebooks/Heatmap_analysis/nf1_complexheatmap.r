@@ -2,10 +2,10 @@ suppressPackageStartupMessages(library(ComplexHeatmap))
 suppressPackageStartupMessages(library(dplyr))
 
 # Set paths and constants
-input_data_dir <- file.path("..", "..", "..", "4_processing_features", "data", "Plate1", "CellProfiler")
+input_data_dir <- file.path("..", "..", "..", "4_processing_features", "data")
 output_figure_dir <- "figures"
 
-cp_heatmap_file_noext <- file.path(output_figure_dir, "all_cp_complex_heatmap")
+cp_heatmap_file_noext <- file.path(output_figure_dir, "cp_complex_heatmap")
 dp_heatmap_file_noext <- file.path(output_figure_dir, "dp_complex_heatmap")
 
 # Set heatmap colors
@@ -37,7 +37,7 @@ cp_df <- readr::read_csv(
         Metadata_gene_name="c",
         Metadata_genotype="c"
     )
-) 
+) %>% dplyr::select(-...1)  # Drop index col
 
 print(dim(cp_df))
 head(cp_df, 3)
