@@ -171,7 +171,7 @@ data_df.Metadata_genotype.value_counts()
 
 # In[11]:
 
-
+# visualize the single cell counts in each well per genotype
 pd.crosstab(data_df.Metadata_genotype, data_df.Metadata_Well)
 
 
