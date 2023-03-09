@@ -65,7 +65,7 @@ Groups:[module_num:4|svn_version:'Unknown'|variable_revision_number:2|show_windo
     grouping metadata count:1
     Metadata category:None
 
-RunCellpose:[module_num:5|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:['The default is 15 for minimum size that is used in Cellpose function, but I have it turned off. Can be defaulted back if needed.']|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+RunCellpose:[module_num:5|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:['The default is 15 for minimum size that is used in Cellpose function, but I have it turned off due to assuming it was turned off in the GUI. Can be defaulted back if needed.']|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:DAPI
     Expected object diameter:50
     Detection mode:cyto
@@ -88,7 +88,7 @@ RunCellpose:[module_num:5|svn_version:'Unknown'|variable_revision_number:3|show_
     Invert images:No
     Remove objects that are touching the edge?:Yes
 
-RunCellpose:[module_num:6|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:['Same as previous module.']|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+RunCellpose:[module_num:6|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:['The default is 15 for minimum size that is used in Cellpose function, but I have it turned off due to assuming it was turned off in the GUI. Can be defaulted back if needed.']|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
     Select the input image:RFP
     Expected object diameter:146
     Detection mode:cyto2
