@@ -1,3 +1,8 @@
+"""
+This file contains functions to run Pycytominer merge single cells, normalize, and feature select and add
+single cell count metadata into the returned csv.gz files.
+"""
+
 import pathlib
 import pandas as pd
 
@@ -48,7 +53,7 @@ def extract_single_cells(
 
     Args:
         single_cell_file (str):
-            file path to SQLite file (must start with sqlite:///)
+            string file path to SQLite file (must start with sqlite:///)
         linking_cols (dict):
             dictionary with the linking columns between compartments/tables in database
         platemap_df (pd.DataFrame):

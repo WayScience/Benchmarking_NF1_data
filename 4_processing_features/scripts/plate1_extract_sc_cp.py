@@ -9,6 +9,7 @@
 
 
 import pandas as pd
+import pathlib
 
 import extraction_utils as sc_util
 
@@ -19,8 +20,8 @@ import extraction_utils as sc_util
 
 
 # Set file and directory constants
-cp_dir = "../CellProfiler_pipelines"
-output_dir = "data/Plate1/CellProfiler"
+cp_dir = pathlib.Path("../CellProfiler_pipelines")
+output_dir = pathlib.Path("data/Plate1/CellProfiler")
 
 
 # ## Set up paths to sqlite files and outputs
@@ -49,7 +50,7 @@ sql_file4 = f"{method4}.sqlite"
 single_cell_file4 = f"sqlite:///{cp_dir}/Analysis_Output/Plate1_Output/{sql_file4}"
 
 # set path to the platemap for plate 1
-platemap_file = f"{cp_dir}/Metadata/platemap_NF1_CP.csv"
+platemap_file = pathlib.Path(f"{cp_dir}/Metadata/platemap_NF1_CP.csv")
 
 
 # ## Set up names for linking columns between tables in the database file
@@ -75,7 +76,7 @@ linking_cols = {
 
 # Load platemap file
 platemap_df = pd.read_csv(platemap_file)
-platemap_df
+platemap_df.head()
 
 
 # ## Perform extraction with All CellProfiler method
