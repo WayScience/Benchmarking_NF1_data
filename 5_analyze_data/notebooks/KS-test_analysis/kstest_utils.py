@@ -1,8 +1,14 @@
+"""
+This file contains function to perform two sample ks-test on the features and merge the ks-test results
+with the metadata in a new csv.
+"""
+
 from scipy.stats import ks_2samp
 import pathlib
 import pandas as pd
 
-def nf1_ks_test_two_sample(normalized_data: pd.DataFrame):
+
+def nf1_ks_test_two_sample(normalized_data: pd.DataFrame) -> pd.DataFrame:
     """separate features by genotype and perform two sample ks-test on each feature
 
     Parameters
@@ -28,23 +34,27 @@ def nf1_ks_test_two_sample(normalized_data: pd.DataFrame):
             # convert each individual column (feature) into numpy array
             null_feature = null_features[column].to_numpy()
             wt_feature = wt_features[column].to_numpy()
-            
-            # run two-sample ks-test for each feature 
+
+            # run two-sample ks-test for each feature
             results = ks_2samp(wt_feature, null_feature)
-            # convert all keys/ks-test results (even the hidden ones due to scipy) into a dictionary 
+            # convert all keys/ks-test results (even the hidden ones due to scipy) into a dictionary
             # and put them as a list
             results = tuple(list(results._asdict().values()))
             feature_results.append(results)
 
-    feature_results = pd.DataFrame(feature_results, columns=["statistic", "pvalue", "statistic_location", "statistic_sign"])
+    feature_results = pd.DataFrame(
+        feature_results,
+        columns=["statistic", "pvalue", "statistic_location", "statistic_sign"],
+    )
 
     return feature_results
+
 
 def merge_features_kstest(
     feature_results: pd.DataFrame,
     feature_names: list,
     save_path: pathlib.Path = None,
-):
+) -> pd.DataFrame:
     """
     merge features with ks-test results into one dataframe
 

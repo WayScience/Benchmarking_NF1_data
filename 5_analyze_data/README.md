@@ -46,6 +46,7 @@ To start Jupyter Lab, run the code block below:
 ```sh
 jupyter lab
 ```
+
 This will open Jupyter Lab into your browser. 
 Using the file explorer, go to the "NF1_SchwannCell_data" directory, go into the "5_analyze_data" module, and start running the notebooks. 
 You will need to change the pathing to the csv.gz outputs in the notebooks to the different pipelines to output the different figures.
